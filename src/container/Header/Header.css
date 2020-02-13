@@ -1,0 +1,17 @@
+header{
+  background: white;
+  padding: 20px;
+  position:fixed;
+  width: 100%;
+}
+.icofont-navigation-menu{
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.menu-left{
+  height: 600px;
+  width: 70px;
+  background: white;
+  position:fixed;
+}

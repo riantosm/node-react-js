@@ -1,0 +1,38 @@
+.aside{
+  overflow:scroll;
+  height: 1000;
+}
+.customer{
+  padding: 5px;
+  background: transparent;
+  color: white;
+  border: none;
+  border-bottom: 1px solid rgb(161, 161, 161);
+  outline: none;
+}
+.hr-cus{
+  border-bottom: 1px solid rgb(161, 161, 161);
+}
+.qty .btn{
+  width: 40px;
+}
+
+.qty input::-webkit-outer-spin-button,
+.qty input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.qty input{
+  padding: 5px;
+  text-align: center;
+  width: 121px;
+  background: transparent;
+  color: white;
+  border: none;
+  outline: none;
+}
+.count_cart{
+  position: absolute;
+  margin-right: 0px;
+  background: red;
+}
