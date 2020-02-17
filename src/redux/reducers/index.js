@@ -4,11 +4,13 @@ import { combineReducers } from "redux";
 // import countReducer from "./count";
 import userReducer from "./user";
 import categoryReducer from "./category";
+import productReducer from "./product";
 
 const reducers = combineReducers({
   // count: countReducer,
   user: userReducer,
-  category: categoryReducer
+  category: categoryReducer,
+  product: productReducer
 });
 
 export default reducers;

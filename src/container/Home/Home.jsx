@@ -188,7 +188,6 @@ class Home extends Component {
               <Route path="/category2" component={Category2} exact />
               {/* product */}
               <Route path="/product" component={Product2} exact />
-              <Route path="/product2" component={Product2} exact />
               {/* cart */}
               <Route path="/cart" component={Cart} exact />
               <Route path="/cart2" component={Cart2} exact />

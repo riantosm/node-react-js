@@ -3,6 +3,8 @@ import React, {Component, Fragment} from 'react';
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
 import Axios from 'axios';
+import { connect } from "react-redux";
+import { postNewProduct, postNewStockProduct, patchNewProduct, deleteNewProduct } from "../../../redux/actions/product";
 
 // pages
 
@@ -60,72 +62,102 @@ class Product2 extends Component {
       this.setState({products: products.result})
     })
   }
-  addProduct = () => {
-    const data = new FormData();
-    data.append('image', this.state.formProduct.image);
-    data.set('name_product', this.state.formProduct.name_product);
-    data.set('desc_product', this.state.formProduct.desc_product);
-    data.set('price_product', this.state.formProduct.price_product);
-    data.set('id_category', this.state.formProduct.id_category);
-    Axios.post(`${URL_STRING_PRODUCT}`, data, {
-      headers: {
-        token: localStorage.getItem('Token')
-      }  
-    }).then((res) => {
-      this.getProduct();
-      this.openAlert(this.state.formProduct.name_product, 'added');
-      this.handleCancel();
-    }, (err) => {
-      console.log('error: ', err);
-    })
-  }
-  addStock = (id) => {
-    Axios.patch(`${URL_STRING_PRODUCT}/${id}/stock`, this.state.formStock, {
-      headers: {
-        token: localStorage.getItem('Token')
-      }  
-    }).then((res) => {
-      this.getProduct();
-      this.openAlert(this.state.formProduct.name_product, 'stock added');
-      this.handleCancel();
-    }, (err) => {
-      console.log('error: ', err);
-    })
-  }
-  updateProduct = () => {
-    const data = new FormData();
-    data.append('image', this.state.formProduct.image);
-    data.set('name_product', this.state.formProduct.name_product);
-    data.set('desc_product', this.state.formProduct.desc_product);
-    data.set('price_product', this.state.formProduct.price_product);
-    data.set('id_category', this.state.formProduct.id_category);
-    Axios.patch(`${URL_STRING_PRODUCT}/${this.state.formProduct.id_product}`, data, {
-      headers: {
-        token: localStorage.getItem('Token')
-      }  
-    }).then((res) => {
-      this.getProduct();
-      this.openAlert(this.state.formProduct.name_product, 'updated');
-      this.handleCancel();
-      var attClass = 'alert alert-success alert-dismissible fade show';
-      document.getElementById('alert').setAttribute('class', attClass);
-    }, (err) => {
-      console.log('error: ', err);
-    })
-  }
-  deleteProduct = (data) => {
-    Axios.delete(`${URL_STRING_PRODUCT}/${data}`, {
-      headers: {
-        token: localStorage.getItem('Token')
-      }  
-    }).then((res) => {
-      this.getProduct();
-      this.openAlert(this.state.formProduct.name_product, 'deleted');
-      this.handleCancel();
-    }, (err) => {
-      console.log('error: ', err);
-    })
-  }
+  // addProduct = () => {
+  //   const data = new FormData();
+  //   data.append('image', this.state.formProduct.image);
+  //   data.set('name_product', this.state.formProduct.name_product);
+  //   data.set('desc_product', this.state.formProduct.desc_product);
+  //   data.set('price_product', this.state.formProduct.price_product);
+  //   data.set('id_category', this.state.formProduct.id_category);
+  //   Axios.post(`${URL_STRING_PRODUCT}`, data, {
+  //     headers: {
+  //       token: localStorage.getItem('Token')
+  //     }  
+  //   }).then((res) => {
+  //     this.getProduct();
+  //     this.openAlert(this.state.formProduct.name_product, 'added');
+  //     this.handleCancel();
+  //   }, (err) => {
+  //     console.log('error: ', err);
+  //   })
+  // }
+  postProduct = form => {
+    this.props.dispatch(postNewProduct(form));
+    setTimeout(this.getProduct, 100);
+    this.openAlert(this.state.formProduct.name_product, 'added');
+    this.handleCancel();
+  };
+  // addStock = (id) => {
+  //   Axios.patch(`${URL_STRING_PRODUCT}/${id}/stock`, this.state.formStock, {
+  //     headers: {
+  //       token: localStorage.getItem('Token')
+  //     }  
+  //   }).then((res) => {
+  //     this.getProduct();
+  //     this.openAlert(this.state.formProduct.name_product, 'stock added');
+  //     this.handleCancel();
+  //   }, (err) => {
+  //     console.log('error: ', err);
+  //   })
+  // }
+  addStock = (form, stock) => {
+    this.props.dispatch(postNewStockProduct(form, stock));
+    setTimeout(this.getProduct, 100);
+    this.openAlert(this.state.formProduct.name_product, 'stock added');
+    this.handleCancel();
+  };
+  // updateProduct = () => {
+  //   const data = new FormData();
+  //   data.append('image', this.state.formProduct.image);
+  //   data.set('name_product', this.state.formProduct.name_product);
+  //   data.set('desc_product', this.state.formProduct.desc_product);
+  //   data.set('price_product', this.state.formProduct.price_product);
+  //   data.set('id_category', this.state.formProduct.id_category);
+  //   Axios.patch(`${URL_STRING_PRODUCT}/${this.state.formProduct.id_product}`, data, {
+  //     headers: {
+  //       token: localStorage.getItem('Token')
+  //     }  
+  //   }).then((res) => {
+  //     this.getProduct();
+  //     this.openAlert(this.state.formProduct.name_product, 'updated');
+  //     this.handleCancel();
+  //     var attClass = 'alert alert-success alert-dismissible fade show';
+  //     document.getElementById('alert').setAttribute('class', attClass);
+  //   }, (err) => {
+  //     console.log('error: ', err);
+  //   })
+  // }
+  patchProduct = form => {
+    this.props.dispatch(patchNewProduct(form));
+    setTimeout(this.getProduct, 100);
+    this.openAlert(this.state.formProduct.name_product, 'updated');
+    this.handleCancel();
+    var attClass = 'alert alert-success alert-dismissible fade show';
+    document.getElementById('alert').setAttribute('class', attClass);
+    this.handleCancel();
+  };
+  // deleteProduct = (data) => {
+  //   Axios.delete(`${URL_STRING_PRODUCT}/${data}`, {
+  //     headers: {
+  //       token: localStorage.getItem('Token')
+  //     }  
+  //   }).then((res) => {
+  //     this.getProduct();
+  //     this.openAlert(this.state.formProduct.name_product, 'deleted');
+  //     this.handleCancel();
+  //   }, (err) => {
+  //     console.log('error: ', err);
+  //   })
+  // }
+  deleteProduct = form => {
+    this.props.dispatch(deleteNewProduct(form));
+    setTimeout(this.getProduct, 100);
+    this.openAlert(this.state.formProduct.name_product, 'deleted');
+    this.handleCancel();
+    var attClass = 'alert alert-success alert-dismissible fade show';
+    document.getElementById('alert').setAttribute('class', attClass);
+    this.handleCancel();
+  };
   // }API
 
   openAlert = (name, status) => {
@@ -212,7 +244,7 @@ class Product2 extends Component {
   }
   addIt = () => {
     // console.log(this.state.formProduct.id_product);
-    this.addStock(this.state.formProduct.id_product);
+    this.addStock(this.state.formProduct, this.state.formStock);
   }
   handleDelete = (data) => {
     this.setState({
@@ -220,16 +252,18 @@ class Product2 extends Component {
     })
   }
   deleteIt = () => {
-    this.deleteProduct(this.state.formProduct.id_product);
+    this.deleteProduct(this.state.formProduct);
   }
   handleSubmit = () => {
     if(this.state.formProduct.name_product === '' || this.state.formProduct.desc_product === '' || this.state.formProduct.image === null){
       alert('Form belum diisi semua ..');
     }else{
       if(this.state.isUpdate){
-        this.updateProduct();
+        // this.updateProduct();
+        this.patchProduct(this.state.formProduct);
       }else{
-        this.addProduct();
+        this.postProduct(this.state.formProduct);
+        // this.addProduct();
       }
     }
   }
@@ -517,4 +551,10 @@ class Product2 extends Component {
   }
 }
 
-export default Product2;
+const mapStateToProps = ({ product }) => {
+  return {
+    product // product: product
+  };
+};
+
+export default connect(mapStateToProps)(Product2);
