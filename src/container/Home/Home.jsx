@@ -17,7 +17,8 @@ import History from "../pages/History/History";
 
 // Style
 import "./Home.css";
-import User from "../pages/User/User";
+// import User from "../pages/User/User";
+import UserRedux from "../pages/User/UserRedux";
 
 class Home extends Component {
   render (){
@@ -181,7 +182,7 @@ class Home extends Component {
               {/* logout */}
               <Route path="/logout" component={Logout} exact />
               {/* user */}
-              <Route path="/user" component={User} exact />
+              <Route path="/user" component={UserRedux} exact />
               {/* category */}
               <Route path="/category" component={Category2} exact />
               <Route path="/category2" component={Category2} exact />

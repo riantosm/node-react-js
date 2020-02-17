@@ -35,7 +35,7 @@ class User extends Component {
     },{
       method: "GET"
     }).then(response => response.json()).then(users => {
-      // console.log(users);
+      // console.log(response);
       this.setState({users: users.result})
     })
   }
@@ -199,20 +199,18 @@ class User extends Component {
               <div className="modal-body">
               <center>
                 <table>
-                  <tbody>
-                    <tr>
-                      <td>Name User : </td>
-                      <td><input type="text" value={this.state.formUser.name_user} name="name_user" onChange={this.handleFormChange} /></td>
-                    </tr>
-                    <tr>
-                      <td>Username : </td>
-                      <td><input type="text" value={this.state.formUser.username} name="username" onChange={this.handleFormChange} /></td>
-                    </tr>
-                    <tr>
-                      <td>password : </td>
-                      <td><input type="password" value={this.state.formUser.password} name="password" onChange={this.handleFormChange} /></td>
-                    </tr>
-                  </tbody>
+                  <tr>
+                    <td>Name User : </td>
+                    <td><input type="text" value={this.state.formUser.name_user} name="name_user" onChange={this.handleFormChange} /></td>
+                  </tr>
+                  <tr>
+                    <td>Username : </td>
+                    <td><input type="text" value={this.state.formUser.username} name="username" onChange={this.handleFormChange} /></td>
+                  </tr>
+                  <tr>
+                    <td>password : </td>
+                    <td><input type="password" value={this.state.formUser.password} name="password" onChange={this.handleFormChange} /></td>
+                  </tr>
                 </table>
               </center>
               </div>
