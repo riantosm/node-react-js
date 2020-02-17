@@ -44,12 +44,12 @@ const userReducer = (state = initialValue, action) => {
         errMsg: action.payload.data
       };
     case "POST_USER_FULFILLED":
-      state.userData.push(action.payload.data.data);
+      state.userData.concat(action.payload.data.result);
       return {
         ...state,
         isPending: false,
         isFulfilled: true,
-        userData: state.userData,
+        userData: state.userData
       };
     default:
       return state;

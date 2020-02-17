@@ -1,7 +1,7 @@
 // Library
 import React, {Component, Fragment} from 'react';
 import { connect } from "react-redux";
-import { getAllUser } from "../../../redux/actions/user";
+import { getAllUser, postNewUser } from "../../../redux/actions/user";
 
 // pages
 
@@ -12,6 +12,12 @@ class UserRedux extends Component {
   state = {
     userData: [],
     userName: "",
+    formUser: {
+      id_user:'',
+      name_user: '',
+      username: '',
+      password:''
+    },
     number: 0
   };
   getUser = async () => {
@@ -20,9 +26,38 @@ class UserRedux extends Component {
       userData: this.props.user.userData
     });
   };
+  postUser = name => {
+    this.props.dispatch(postNewUser(name));
+    setTimeout(this.getUser, 100);
+  };
+
   componentDidMount = () => {
     setTimeout(this.getUser, 2000);
   };
+  
+  handleSubmit = () => {
+    if(this.state.formUser.name_user === ''){
+      alert('Form belum diisi semua ..');
+    }else{ 
+      this.postUser(this.state.formUser); 
+    }
+  }
+  handleFormChange = (event) => {
+    let formUserNew = {...this.state.formUser};
+    formUserNew[event.target.name] = event.target.value;
+    // validation{
+    let patt = /[a-zA-Z0-9 ]+$/;
+    let res_name = formUserNew.name_user.match(patt);
+    if(res_name == null){
+      return false;
+    }
+    document.getElementById('save').setAttribute('class', 'btn btn-primary');
+    document.getElementById('save').setAttribute('data-dismiss', 'modal');
+    // }validation
+    this.setState({
+      formUser: formUserNew
+    })
+  }
   render (){
     return (
       <Fragment>
@@ -80,29 +115,29 @@ class UserRedux extends Component {
           <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="modalAddUpdateTitle">this.state.modalTitle</h5>
+                <h5 className="modal-title" id="modalAddUpdateTitle">{this.state.modalTitle}</h5>
               </div>
               <div className="modal-body">
               <center>
                 <table>
                   <tr>
                     <td>Name User : </td>
-                    <td><input type="text" name="name_user" /></td>
+                    <td><input type="text" value={this.state.formUser.name_user} name="name_user" onChange={this.handleFormChange} /></td>
                   </tr>
                   <tr>
                     <td>Username : </td>
-                    <td><input type="text" name="username" /></td>
+                    <td><input type="text" value={this.state.formUser.username} name="username" onChange={this.handleFormChange} /></td>
                   </tr>
                   <tr>
                     <td>password : </td>
-                    <td><input type="password" name="password" /></td>
+                    <td><input type="password" value={this.state.formUser.password} name="password" onChange={this.handleFormChange} /></td>
                   </tr>
                 </table>
               </center>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal" >Close</button>
-                <button type="button" className="btn btn-secondary" id="save" >Save changes</button>
+                <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.handleCancel}>Close</button>
+                <button type="button" className="btn btn-secondary" id="save" onClick={this.handleSubmit}>Save changes</button>
                 {/* onClick={this.handleSubmit} data-dismiss="modal" */}
               </div>
             </div>
