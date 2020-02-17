@@ -41,19 +41,19 @@ class User extends Component {
       this.setState({users: users.result})
     })
   }
-  addUser = () => {
-    Axios.post(URL_STRING_USER, this.state.formUser, {
-      headers: {
-        token: localStorage.getItem('Token')
-      }  
-    }).then((res) => {
-      this.getUser();
-      this.openAlert(this.state.formUser.name_user, 'added');
-      this.handleCancel();
-    }, (err) => {
-      console.log('error: ', err);
-    })
-  }
+  // addUser = () => {
+  //   Axios.post(URL_STRING_USER, this.state.formUser, {
+  //     headers: {
+  //       token: localStorage.getItem('Token')
+  //     }  
+  //   }).then((res) => {
+  //     this.getUser();
+  //     this.openAlert(this.state.formUser.name_user, 'added');
+  //     this.handleCancel();
+  //   }, (err) => {
+  //     console.log('error: ', err);
+  //   })
+  // }
   postUser = form => {
     this.props.dispatch(postNewUser(form));
     setTimeout(this.getUser, 100);

@@ -3,6 +3,8 @@ import React, {Component, Fragment} from 'react';
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
 import Axios from 'axios';
+import { connect } from "react-redux";
+import { postNewCategory, patchNewCategory, deleteNewCategory } from "../../../redux/actions/category";
 
 // pages
 
@@ -36,47 +38,71 @@ class Category2 extends Component {
       this.setState({categorys: categorys.result})
     })
   }
-  addCategory = () => {
-    Axios.post(URL_STRING_CATEGORY, this.state.formCategory, {
-      headers: {
-        token: localStorage.getItem('Token')
-      }  
-    }).then((res) => {
-      this.getCategory();
-      this.openAlert(this.state.formCategory.name_category, 'added');
-      this.handleCancel();
-    }, (err) => {
-      console.log('error: ', err);
-    })
-  }
-  updateCategory = () => {
-    Axios.patch(`${URL_STRING_CATEGORY}/${this.state.formCategory.id_category}`, this.state.formCategory, {
-      headers: {
-        token: localStorage.getItem('Token')
-      }  
-    }).then((res) => {
-      this.getCategory();
-      this.openAlert(this.state.formCategory.name_category, 'updated');
-      this.handleCancel();
-      var attClass = 'alert alert-success alert-dismissible fade show';
-      document.getElementById('alert').setAttribute('class', attClass);
-    }, (err) => {
-      console.log('error: ', err);
-    })
-  }
-  deleteCategory = (data) => {
-    Axios.delete(`${URL_STRING_CATEGORY}/${data}`, {
-      headers: {
-        token: localStorage.getItem('Token')
-      }  
-    }).then((res) => {
-      this.getCategory();
-      this.openAlert(this.state.formCategory.name_category, 'deleted');
-      this.handleCancel();
-    }, (err) => {
-      console.log('error: ', err);
-    })
-  }
+  // addCategory = () => {
+  //   Axios.post(URL_STRING_CATEGORY, this.state.formCategory, {
+  //     headers: {
+  //       token: localStorage.getItem('Token')
+  //     }  
+  //   }).then((res) => {
+  //     this.getCategory();
+  //     this.openAlert(this.state.formCategory.name_category, 'added');
+  //     this.handleCancel();
+  //   }, (err) => {
+  //     console.log('error: ', err);
+  //   })
+  // }
+  postCategory = form => {
+    this.props.dispatch(postNewCategory(form));
+    setTimeout(this.getCategory, 100);
+    this.openAlert(this.state.formCategory.name_category, 'added');
+    this.handleCancel();
+  };
+  // updateCategory = () => {
+  //   Axios.patch(`${URL_STRING_CATEGORY}/${this.state.formCategory.id_category}`, this.state.formCategory, {
+  //     headers: {
+  //       token: localStorage.getItem('Token')
+  //     }  
+  //   }).then((res) => {
+  //     this.getCategory();
+  //     this.openAlert(this.state.formCategory.name_category, 'updated');
+  //     this.handleCancel();
+  //     var attClass = 'alert alert-success alert-dismissible fade show';
+  //     document.getElementById('alert').setAttribute('class', attClass);
+  //   }, (err) => {
+  //     console.log('error: ', err);
+  //   })
+  // }
+  patchCategory = form => {
+    this.props.dispatch(patchNewCategory(form));
+    setTimeout(this.getCategory, 100);
+    this.openAlert(this.state.formCategory.name_category, 'updated');
+    this.handleCancel();
+    var attClass = 'alert alert-success alert-dismissible fade show';
+    document.getElementById('alert').setAttribute('class', attClass);
+    this.handleCancel();
+  };
+  // deleteCategory = (data) => {
+  //   Axios.delete(`${URL_STRING_CATEGORY}/${data}`, {
+  //     headers: {
+  //       token: localStorage.getItem('Token')
+  //     }  
+  //   }).then((res) => {
+  //     this.getCategory();
+  //     this.openAlert(this.state.formCategory.name_category, 'deleted');
+  //     this.handleCancel();
+  //   }, (err) => {
+  //     console.log('error: ', err);
+  //   })
+  // }
+  deleteCategory = form => {
+    this.props.dispatch(deleteNewCategory(form));
+    setTimeout(this.getCategory, 100);
+    this.openAlert(this.state.formCategory.name_category, 'deleted');
+    this.handleCancel();
+    var attClass = 'alert alert-success alert-dismissible fade show';
+    document.getElementById('alert').setAttribute('class', attClass);
+    this.handleCancel();
+  };
 
   // }API
 
@@ -116,9 +142,11 @@ class Category2 extends Component {
       alert('Form belum diisi semua ..');
     }else{
       if(this.state.isUpdate){
-        this.updateCategory();
+        // this.updateCategory();
+        this.patchCategory(this.state.formCategory)
       }else{
-        this.addCategory();
+        // this.addCategory();
+        this.postCategory(this.state.formCategory)
       }
     }
   }
@@ -148,7 +176,7 @@ class Category2 extends Component {
     })
   }
   deleteIt = () => {
-    this.deleteCategory(this.state.formCategory.id_category);
+    this.deleteCategory(this.state.formCategory);
   }
 
   render (){
@@ -280,4 +308,10 @@ class Category2 extends Component {
   }
 }
 
-export default Category2;
+const mapStateToProps = ({ category }) => {
+  return {
+    category // category: category
+  };
+};
+
+export default connect(mapStateToProps)(Category2);
