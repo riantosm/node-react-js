@@ -1,7 +1,6 @@
 // Library
 import React, {Component} from 'react';
 import Axios from 'axios';
-import { Redirect } from 'react-router-dom';
 
 // pages
 
@@ -18,19 +17,7 @@ class Login extends Component {
       password: ''
     },
     // login: true,
-    redirect: false
   }
-
-  setRedirect = () => {
-    this.setState({
-      redirect: true
-    })
-  }
-  renderRedirect = () => {
-    if (this.state.redirect) {
-      return <Redirect to='/' />
-    }
-  } 
 
   // API{
   loginUser = () => {
@@ -42,7 +29,7 @@ class Login extends Component {
         localStorage.setItem('Token', response.data.token)
         // this.setState({ login:false })
         // console.log(localStorage.getItem('Token'));
-        return <Redirect to='/' />
+        return document.location = "/"
       }
     })
   }
@@ -64,52 +51,52 @@ class Login extends Component {
     this.loginUser();
   }
   render (){
-      return (
-        <div>
-          <div className="abs">
-            <div className="container">
-              <div className="row">
-                <div className="col-12">
-                <center>
-                <img src="assets/dist/img/segi6_gray.png" alt="" className="img-login mr-2"/>
-                </center>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="login-page">
-            <div class="login-box">
-              <div class="login-logo">   
-              <a><b>Tosm</b>Cafe</a>
-              </div>
-              <div class="card">
-                <div class="card-body login-card-body mb-2">
-                  <p class="login-box-msg">Sign in</p>
-                    <div class="input-group mb-3">
-                      <input type="text" class="form-control" placeholder="Username" value={this.state.formUser.username} onChange={this.handleFormChange} name="username" />
-                      <div class="input-group-append">
-                        <div class="input-group-text">
-                          <span class="fas fa-envelope"></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="input-group mb-3">
-                      <input type="password" class="form-control" placeholder="Password" value={this.state.formUser.password} onChange={this.handleFormChange} name="password" />
-                      <div class="input-group-append">
-                        <div class="input-group-text">
-                          <span class="fas fa-lock"></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-4">
-                      <button class="btn btn-primary btn-block" onClick={this.handleSubmit}>Sign In</button>
-                    </div>
-                </div>
+    return (
+      <div>
+        <div className="abs">
+          <div className="container">
+            <div className="row">
+              <div className="col-12">
+              <center>
+              <img src="assets/dist/img/segi6_gray.png" alt="" className="img-login mr-2"/>
+              </center>
               </div>
             </div>
           </div>
         </div>
-      )
+        <div class="login-page">
+          <div class="login-box">
+            <div class="login-logo">   
+            <b>Tosm</b>Cafe
+            </div>
+            <div class="card">
+              <div class="card-body login-card-body mb-2">
+                <p class="login-box-msg">Sign in</p>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Username" value={this.state.formUser.username} onChange={this.handleFormChange} name="username" />
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-envelope"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <input type="password" class="form-control" placeholder="Password" value={this.state.formUser.password} onChange={this.handleFormChange} name="password" />
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <button class="btn btn-primary btn-block" onClick={this.handleSubmit}>Sign In</button>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 }
 

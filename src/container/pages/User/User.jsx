@@ -199,18 +199,20 @@ class User extends Component {
               <div className="modal-body">
               <center>
                 <table>
-                  <tr>
-                    <td>Name User : </td>
-                    <td><input type="text" value={this.state.formUser.name_user} name="name_user" onChange={this.handleFormChange} /></td>
-                  </tr>
-                  <tr>
-                    <td>Username : </td>
-                    <td><input type="text" value={this.state.formUser.username} name="username" onChange={this.handleFormChange} /></td>
-                  </tr>
-                  <tr>
-                    <td>password : </td>
-                    <td><input type="password" value={this.state.formUser.password} name="password" onChange={this.handleFormChange} /></td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <td>Name User : </td>
+                      <td><input type="text" value={this.state.formUser.name_user} name="name_user" onChange={this.handleFormChange} /></td>
+                    </tr>
+                    <tr>
+                      <td>Username : </td>
+                      <td><input type="text" value={this.state.formUser.username} name="username" onChange={this.handleFormChange} /></td>
+                    </tr>
+                    <tr>
+                      <td>password : </td>
+                      <td><input type="password" value={this.state.formUser.password} name="password" onChange={this.handleFormChange} /></td>
+                    </tr>
+                  </tbody>
                 </table>
               </center>
               </div>

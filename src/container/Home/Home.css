@@ -1,3 +1,98 @@
+/* 
+  Pink : #F24F8A
+  BlueAqua : #57CAD5
+  Green : #82DE3A
+*/
+
+.nav-pills .nav-link:not(.active):hover {
+  color: rgb(45, 158, 168) !important;
+}
+/* PINK */
+.btn-danger{
+  background-color: #F24F8A !important;
+  border-color: #F24F8A !important;
+  color: white !important;
+  transition: 0.5s;
+}
+.btn-danger:hover{
+  background-color: rgb(182, 28, 85) !important;
+  border-color: rgb(182, 28, 85) !important;
+  color: white !important;
+  transition: 0.5s;
+}
+
+.text-danger{
+  color: #F24F8A !important;
+  transition: 0.5s;
+}
+.text-danger:hover{
+  color: rgb(160, 23, 73) !important;
+  transition: 0.5s;
+}
+
+/* AQUA */
+.btn-primary{
+  background-color: #57CAD5;
+  border-color: #57CAD5 !important;
+  color: white;
+  transition: 0.5s;
+}
+.btn-primary:hover{
+  background-color: rgb(47, 154, 163);
+  border-color: rgb(47, 154, 163) !important;
+  color: white;
+  transition: 0.5s;
+}
+
+.text-primary{
+  color: #57CAD5 !important;
+  transition: 0.5s;
+}
+.text-primary:hover{
+  color: rgb(160, 23, 73) !important;
+  transition: 0.5s;
+}
+
+/* PURPLE */
+.btn-info{
+  background-color: #AB84C8;
+  border-color: #AB84C8 !important;
+  color: white;
+  transition: 0.5s;
+}
+.btn-info:hover{
+  background-color: rgb(47, 154, 163);
+  border-color: rgb(47, 154, 163) !important;
+  color: white;
+  transition: 0.5s;
+}
+
+.text-info{
+  color: #57CAD5 !important;
+  transition: 0.5s;
+}
+.text-info:hover{
+  color: rgb(160, 23, 73) !important;
+  transition: 0.5s;
+}
+
+/* GREEN */
+.btn-green{
+  background: rgba(130, 222, 58, 0.2);
+  border: 2px solid #82DE3A;
+  color: #82DE3A;
+  border-radius: 1px;
+  font-weight: 600;
+}
+.btn-green:hover{
+  background: rgba(120, 206, 54, 0.3);
+  border: 2px solid #82DE3A;
+  color: #82DE3A;
+  border-radius: 1px;
+  font-weight: 600;
+}
+
+
 .cursor{
   cursor: pointer;
 }

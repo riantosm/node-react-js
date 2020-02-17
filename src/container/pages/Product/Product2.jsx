@@ -340,7 +340,7 @@ class Product2 extends Component {
                   <div className="container">
                     <div className="row">
                       <div className="col-12">
-                        <div className="btn btn-primary mt-5 mb-3 cursor" data-toggle="modal" data-target="#modalAddUpdate">
+                        <div className="btn btn-primary mb-3 cursor" data-toggle="modal" data-target="#modalAddUpdate">
                           Tambah
                         </div>
                         <div className="alert alert-success alert-dismissible fade show d-none" id="alert" role="alert">
@@ -454,17 +454,7 @@ class Product2 extends Component {
                     </tr>
                     <tr>
                       <td>Category</td>
-                      <td>
-                        {
-                          this.state.categorys.map(category => {
-                            if(this.state.formProduct.id_category === category.id_category){
-                              return (
-                                category.name_category
-                              )
-                            }
-                          })
-                        }
-                      </td>
+                      <td>{this.state.formProduct.name_category}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -477,28 +467,30 @@ class Product2 extends Component {
           </div>
         </div>
         {/*  */}
-        <div class="modal fade" id="addStock" tabindex="-1" role="dialog" aria-labelledby="addStockLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="addStockLabel">Add Stock ({this.state.formProduct.name_product})</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <div className="modal fade" id="addStock" tabIndex="-1" role="dialog" aria-labelledby="addStockLabel" aria-hidden="true">
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="addStockLabel">Add Stock ({this.state.formProduct.name_product})</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div class="modal-body">
+              <div className="modal-body">
                 <table>
+                  <thead>
                   <tr>
                     <td>Stock</td>
                     <td>
                       <input type="number" min="1" max="1000" name="stock" value={this.state.formStock.stock} onChange={this.handleStockChange} />
                     </td>
                   </tr>
+                  </thead>
                 </table>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={this.handleCancel}>Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" onClick={this.addIt}>Add</button>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.handleCancel}>Close</button>
+                <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={this.addIt}>Add</button>
               </div>
             </div>
           </div>
