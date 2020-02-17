@@ -202,6 +202,11 @@ class Product2 extends Component {
         image = event.target.files[0];
       }else{
         image = null;
+        document.getElementById('save').setAttribute('class', 'btn btn-secondary');
+        document.getElementById('save').setAttribute('data-dismiss', '');
+      }
+      if(event.target.files[0].size > 1040701 ){
+        image = null;
       }
       formProductNew[event.target.name] = image;
     }else{
@@ -412,19 +417,19 @@ class Product2 extends Component {
                 <form encType="multipart/form-data">
                   <div className="form-group">
                     <label htmlFor="name_product">Name Product</label>
-                    <input type="text" className="form-control" id="name_product" name="name_product" placeholder="Example input placeholder" value={this.state.formProduct.name_product} onChange={this.handleFormChange} require="true" />
+                    <input type="text" className="form-control shadow" id="name_product" name="name_product" placeholder="" value={this.state.formProduct.name_product} onChange={this.handleFormChange} require="true" />
                   </div>
                   <div className="form-group">
                     <label htmlFor="desc_product">Description</label>
-                    <textarea className="form-control" id="desc_product" name="desc_product" placeholder="Example input placeholder" value={this.state.formProduct.desc_product} onChange={this.handleFormChange} />
+                    <textarea className="form-control shadow" id="desc_product" name="desc_product" placeholder="" value={this.state.formProduct.desc_product} onChange={this.handleFormChange} />
                   </div>
                   <div className="form-group">
                     <label htmlFor="price_product">Price</label>
-                    <input type="number" className="form-control" id="price_product" name="price_product" placeholder="Example input placeholder" min="1000" max="10000000" value={this.state.formProduct.price_product} onChange={this.handleFormChange} />
+                    <input type="number" className="form-control shadow" id="price_product" name="price_product" placeholder="" min="1000" max="10000000" value={this.state.formProduct.price_product} onChange={this.handleFormChange} />
                   </div>
                   <div className="form-group">
                     <label htmlFor="productName">Category</label>
-                    <select className="custom-select" name="id_category" onChange={this.handleFormChange}>
+                    <select className="custom-select shadow" name="id_category" onChange={this.handleFormChange}>
                       {
                         this.state.categorys.map(category => {
                           if(this.state.formProduct.id_category === category.id_category){
@@ -440,7 +445,7 @@ class Product2 extends Component {
                       }
                     </select>
                   </div>
-                  <div className="form-group">
+                  <div className="form-group shadow">
                     <div className="custom-file">
                       <input type="file" className="custom-file-input" id="image" name="image" onChange={this.handleFormChange} />
                       <label className="custom-file-label" htmlFor="image">Choose file</label>

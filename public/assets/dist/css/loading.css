@@ -1,0 +1,69 @@
+/*loading*/
+.bg_loading{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 999999;
+}
+.bg_loading.show{
+    background-color: white;
+    transition: 0.5s;
+    opacity: 1;
+}
+.bg_loading.hide{
+    visibility: hidden;
+    transition: 1s;
+    opacity: 0;
+}
+.loading{
+    width: 50px;
+    height: 50px;
+    border: 5px solid;
+    border-left-color: #000 !important;
+    border-right-color: #000 !important;
+    border-bottom-color: #000 !important;
+    border-radius: 100%;
+    position: absolute;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:auto;
+    margin-bottom:auto;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+
+    animation: putar 2s linear infinite;
+}
+.logo-loading{
+    -webkit-filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.29));
+    width: 150px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@keyframes putar{
+    from{transform: rotate(0deg);}
+    to{transform: rotate(360deg);}
+}
+@keyframes logo_naik{
+    from{transform: translateY(0px);}
+    to{transform: translateY(-50px);}
+}
+@keyframes logo_turun{
+    from{transform: translateY(-50px);}
+    to{transform: translateY(0px);}
+}
+.stop-scrolling{
+    height: 100%;
+    overflow: hidden;
+}
+/*/loading*/

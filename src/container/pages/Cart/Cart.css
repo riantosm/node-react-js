@@ -58,12 +58,15 @@
   color: #82DE3A;
   outline: none;
 }
-.card .added{
+.card-cart{
+}
+.card-cart .added{
+  cursor: pointer;
   background: rgba(0, 0, 0, 0.349);
   transition: 0.5s;
   position: absolute; 
-  width: 100%;
-  height: 100%;
+  width: 240px;
+  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -71,12 +74,13 @@
   color: white;
   font-size: 50px;
 }
-.card .add{
+.card-cart .add{
+  cursor: pointer;
   opacity: 0;
   transition: 0.5s;
   position: absolute; 
-  width: 100%;
-  height: 100%;
+  width: 240px;
+  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,7 +88,7 @@
   color: white;
   font-size: 40px;
 }
-.card .add:hover{
+.card-cart .add:hover{
   background: rgba(0, 0, 0, 0.349);
   opacity: 1;
   transition: 0.5s;
@@ -94,6 +98,9 @@
   position: absolute;
   margin-right: 0px;
   background: red;
+}
+.cart-conten{
+  width: 240px;
 }
 
 

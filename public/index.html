@@ -21,6 +21,10 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
+    <!-- loading -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/assets/dist/css/loading.css">
+    <link rel="stylesheet" href="%PUBLIC_URL%/assets/dist/css/animate.css">
+
     <!-- FONT -->
     <style type="text/css">
       @font-face {
@@ -55,6 +59,10 @@
     <title>Tosm Cafe</title>
   </head>
   <body class="hold-transition sidebar-mini">
+    <div class="bg_loading show" id="bg_loading">
+      <img src="%PUBLIC_URL%/assets/dist/img/segi6_black.png" class="logo-loading animated infinite rubberBand">
+      <!-- <div class="loading border-tosm" id="loading"></div> -->
+    </div>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
@@ -77,6 +85,8 @@
     <!-- DataTables -->
     <script src="%PUBLIC_URL%/assets/plugins/datatables/jquery.dataTables.js"></script>
     <script src="%PUBLIC_URL%/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+    <!-- loading -->
+    <script src='%PUBLIC_URL%/assets/dist/js/loading.js'></script>
     
     <script src="%PUBLIC_URL%/assets/plugins/chart.js/Chart.min.js"></script>
     <script src="%PUBLIC_URL%/assets/dist/js/pages/dashboard3.js"></script>

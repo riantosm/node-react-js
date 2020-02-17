@@ -31,7 +31,7 @@ class Home extends Component {
           <div>
             <Switch>
               {/* login */}
-              <Route path="/" component={Login} exact />
+              <Route path="/" component={Login} />
             </Switch>
           </div>
         </Router>
