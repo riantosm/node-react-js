@@ -36,7 +36,9 @@ class Product2 extends Component {
       isUpdate: false,
       modalTitle: 'Add Product',
       number: 0,
-      selectedCa: true
+      selectedCa: true,
+      character_name: 0,
+      character_desc: 0
     }
   }
   // API{
@@ -179,34 +181,55 @@ class Product2 extends Component {
   handleFormChange = (event) => {
     let formProductNew = {...this.state.formProduct};
     // validation{
-    let patt = /[a-zA-Z0-9(),.+#%@^" -]+$/;
+    let patt = /[a-zA-Z0-9(),.+" -]+$/;
     let res = event.target.value.match(patt);
 
     if(event.target.name === 'name_product'){
       name_product = event.target.value;
+      if(name_product.length > 30){
+        res = null;
+      }else{
+        this.setState({
+          character_name: name_product.length
+        })
+      }
     }
     if(event.target.name === 'desc_product'){
       desc_product = event.target.value;
+      if(desc_product.length > 100){
+        res = null;
+      }else{
+        this.setState({
+          character_desc: desc_product.length
+        })
+      }
     }
     if(event.target.name === 'price_product'){
-      if(event.target.value >= 1000000){
+      if(event.target.value > 1000000){
         res = null;
       }
     }
     if(event.target.name === 'image'){
       if(event.target.value.search('.jpg') > 0){
         image = event.target.files[0];
+        document.getElementById('invalid-image').setAttribute('class', 'text-danger p-2 d-none');
       }else if(event.target.value.search('.jpeg') > 0){
         image = event.target.files[0];
+        document.getElementById('invalid-image').setAttribute('class', 'text-danger p-2 d-none');
       }else if(event.target.value.search('.png') > 0){
         image = event.target.files[0];
+        document.getElementById('invalid-image').setAttribute('class', 'text-danger p-2 d-none');
       }else{
         image = null;
+        document.getElementById('invalid-image').setAttribute('class', 'text-danger p-2 d-block');
         document.getElementById('save').setAttribute('class', 'btn btn-secondary');
         document.getElementById('save').setAttribute('data-dismiss', '');
       }
-      if(event.target.files[0].size > 1040701 ){
-        image = null;
+      if(event.target.files[0].size){
+        if(event.target.files[0].size > 1040701 ){
+          document.getElementById('invalid-image').setAttribute('class', 'text-danger p-2 d-block');
+          image = null;
+        }
       }
       formProductNew[event.target.name] = image;
     }else{
@@ -415,40 +438,89 @@ class Product2 extends Component {
               </div>
               <div className="modal-body">
                 <form encType="multipart/form-data">
-                  <div className="form-group">
-                    <label htmlFor="name_product">Name Product</label>
-                    <input type="text" className="form-control shadow" id="name_product" name="name_product" placeholder="" value={this.state.formProduct.name_product} onChange={this.handleFormChange} require="true" />
+                  <div className="form-group row">
+                    <div className="col-3">
+                      <label htmlFor="name_product">
+                        Name
+                        <br/>
+                        <sub className="text-secondary">
+                          (character {this.state.character_name}/30)
+                        </sub>
+                      </label>
+                    </div>
+                    <div className="col-9">
+                      <input type="text" className="form-control shadow" id="name_product" name="name_product" placeholder="" value={this.state.formProduct.name_product} onChange={this.handleFormChange} require="true" />
+                    </div>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="desc_product">Description</label>
+                  <div className="form-group row">
+                  <div className="col-3">
+                    <label htmlFor="desc_product">
+                      Description
+                      <br/>
+                      <sub className="text-secondary">
+                        (character {this.state.character_desc}/100)
+                      </sub>
+                    </label>
+                  </div>
+                  <div className="col-9">
                     <textarea className="form-control shadow" id="desc_product" name="desc_product" placeholder="" value={this.state.formProduct.desc_product} onChange={this.handleFormChange} />
+                    </div>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="price_product">Price</label>
-                    <input type="number" className="form-control shadow" id="price_product" name="price_product" placeholder="" min="1000" max="10000000" value={this.state.formProduct.price_product} onChange={this.handleFormChange} />
+                  <div className="form-group row">
+                    <div className="col-3">
+                      <label htmlFor="price_product">
+                        Price
+                        <br/>
+                        <sub className="text-secondary">
+                          (min: 1000. max: 1000000)
+                        </sub>
+                      </label>
+                    </div>
+                    <div className="col-9">
+                      <input type="number" className="form-control shadow" id="price_product" name="price_product" placeholder="" min="1000" max="1000000" value={this.state.formProduct.price_product} onChange={this.handleFormChange} />
+                    </div>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="productName">Category</label>
-                    <select className="custom-select shadow" name="id_category" onChange={this.handleFormChange}>
-                      {
-                        this.state.categorys.map(category => {
-                          if(this.state.formProduct.id_category === category.id_category){
-                            return (
-                              <option key={category.id_category} value={category.id_category} selected> {category.name_category}</option>
-                            )
-                          }else{
-                            return (
-                              <option key={category.id_category} value={category.id_category}>{category.name_category}</option>
-                            )
-                          }
-                        })
-                      }
-                    </select>
+                  <div className="form-group row">
+                    <div className="col-3">
+                      <label htmlFor="productName">Category</label>
+                    </div>
+                    <div className="col-9">
+                      <select className="custom-select shadow" name="id_category" onChange={this.handleFormChange}>
+                        {
+                          this.state.categorys.map(category => {
+                            if(this.state.formProduct.id_category === category.id_category){
+                              return (
+                                <option key={category.id_category} value={category.id_category} selected> {category.name_category}</option>
+                              )
+                            }else{
+                              return (
+                                <option key={category.id_category} value={category.id_category}>{category.name_category}</option>
+                              )
+                            }
+                          })
+                        }
+                      </select>
+                    </div>
                   </div>
-                  <div className="form-group shadow">
-                    <div className="custom-file">
-                      <input type="file" className="custom-file-input" id="image" name="image" onChange={this.handleFormChange} />
-                      <label className="custom-file-label" htmlFor="image">Choose file</label>
+                  <div className="form-group row">
+                    <div className="col-3">
+                      <label htmlFor="productImage">
+                        Image
+                        <br/>
+                        <sub className="text-secondary">
+                          (.png / .jpg / .jpeg & max size 1mb )
+                        </sub>
+                      </label>
+                    </div>
+                    <div className="col-9">
+                      <div className="custom-file shadow">
+                        <input type="file" className="custom-file-input" id="image" name="image" onChange={this.handleFormChange} />
+                        <label className="custom-file-label" htmlFor="image">Choose file</label>
+                      </div>
+                      <br/>
+                      <sub className="text-danger pl-2 d-none" id="invalid-image">
+                        Invalid image
+                      </sub>
                     </div>
                   </div>
                 </form>

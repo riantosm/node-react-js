@@ -7,6 +7,17 @@
 .nav-pills .nav-link:not(.active):hover {
   color: rgb(45, 158, 168) !important;
 }
+.alert-success{
+  background-color: #AB84C8;
+  border-color: #AB84C8 !important;
+  color: white;
+  transition: 0.5s;
+}
+.btn-secondary{
+  background-color: #F24F8A !important;
+  border-color: #F24F8A !important;
+  transition: 0.5s;
+  }
 /* PINK */
 .btn-danger{
   background-color: #F24F8A !important;
