@@ -58,6 +58,19 @@ class UserRedux extends Component {
       formUser: formUserNew
     })
   }
+  handleCancel = () => {
+    this.setState({
+      isUpdate: false,
+      formUser: {
+        id_user:'',
+        name_user: '',
+        username: '',
+        password:''
+      },
+      modalTitle: 'Add Product'
+    })
+    document.getElementById('save').setAttribute('class', 'btn btn-secondary');
+  }
   render (){
     return (
       <Fragment>

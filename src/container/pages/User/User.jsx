@@ -3,6 +3,8 @@ import React, {Component, Fragment} from 'react';
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
 import Axios from 'axios';
+import { connect } from "react-redux";
+import { postNewUser } from "../../../redux/actions/user";
 
 // pages
 
@@ -52,6 +54,12 @@ class User extends Component {
       console.log('error: ', err);
     })
   }
+  postUser = form => {
+    this.props.dispatch(postNewUser(form));
+    setTimeout(this.getUser, 100);
+    this.openAlert(this.state.formUser.name_user, 'added');
+    this.handleCancel();
+  };
   // }API
 
   openAlert = (name, status) => {
@@ -89,7 +97,8 @@ class User extends Component {
     if(this.state.formUser.name_user === ''){
       alert('Form belum diisi semua ..');
     }else{ 
-        this.addUser(); 
+      // this.addUser(); 
+      this.postUser(this.state.formUser); 
     }
   }
   handleCancel = () => {
@@ -227,4 +236,10 @@ class User extends Component {
   }
 }
 
-export default User;
+const mapStateToProps = ({ user }) => {
+  return {
+    user // user: user
+  };
+};
+
+export default connect(mapStateToProps)(User);

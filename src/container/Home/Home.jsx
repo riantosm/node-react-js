@@ -14,11 +14,11 @@ import Category2 from "../pages/Category/Category2";
 import Product2 from "../pages/Product/Product2";
 import Cart2 from "../pages/Cart/Cart2";
 import History from "../pages/History/History";
+import User from "../pages/User/User";
+// import UserRedux from "../pages/User/UserRedux";
 
 // Style
 import "./Home.css";
-// import User from "../pages/User/User";
-import UserRedux from "../pages/User/UserRedux";
 
 class Home extends Component {
   render (){
@@ -182,7 +182,7 @@ class Home extends Component {
               {/* logout */}
               <Route path="/logout" component={Logout} exact />
               {/* user */}
-              <Route path="/user" component={UserRedux} exact />
+              <Route path="/user" component={User} exact />
               {/* category */}
               <Route path="/category" component={Category2} exact />
               <Route path="/category2" component={Category2} exact />
