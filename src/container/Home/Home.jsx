@@ -56,7 +56,7 @@ class Home extends Component {
               <ul className="navbar-nav ml-auto">
                 {/* Messages Dropdown Menu */}
                 <li className="nav-item">
-                  <Link to="/#" className="nav-link cursor" data-widget="control-sidebar" data-slide="true">
+                  <Link className="nav-link cursor" data-widget="control-sidebar" data-slide="true">
                     <i className="fas fa-shopping-cart"></i>
                   </Link>
                 </li>
@@ -67,8 +67,8 @@ class Home extends Component {
             <aside className="main-sidebar sidebar-light-primary elevation-4">
               {/* Brand Logo */}
               <Link to="/" className="brand-link">
-                <img src="assets/dist/img/logo (2).png" alt="Logo" className="brand-image img-circle elevation-3"  />
-                <span className="brand-text font-weight">ArkaCafe</span>
+                <img src="assets/dist/img/logo.png" alt="Logo" className="brand-image img-circle elevation-3"  />
+                <span className="brand-text font-weight">Ar-Cafe</span>
               </Link>
               {/* Sidebar */}
               <div className="sidebar">
@@ -79,7 +79,8 @@ class Home extends Component {
                         with font-awesome or any other icon font library */}
                     <li className="nav-item has-treeview">
                       <Link to="/#" className="nav-link cursor">
-                        <i className="nav-icon fas fa-tachometer-alt"></i>
+                        {/* <i className="nav-icon fas fa-tachometer-alt"></i> */}
+                        <img src="assets/dist/img/clipboard.png" alt="Logo" className="nav-icon mr-2"/>
                         <p>
                           Dashboard
                           <i className="right fas fa-angle-left"></i>
@@ -96,7 +97,7 @@ class Home extends Component {
                     </li>
                     <li className="nav-item has-treeview ">
                       <Link to="/#" className="nav-link cursor">
-                      <i className="nav-icon fas fa-edit"></i>
+                        <img src="assets/dist/img/fork.png" alt="Logo" className="nav-icon mr-2"/>
                         <p>
                           Data
                           <i className="right fas fa-angle-left"></i>
@@ -125,7 +126,7 @@ class Home extends Component {
                     </li>
                     <li className="nav-item has-treeview">
                       <Link to="/#" className="nav-link cursor">
-                        <i className="nav-icon far fa-plus-square"></i>
+                        <img src="assets/dist/img/add.png" alt="Logo" className="nav-icon mr-2"/>
                         <p>
                           Cart
                           <i className="right fas fa-angle-left"></i>

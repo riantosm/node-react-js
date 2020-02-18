@@ -10,8 +10,8 @@ import { Link } from "react-router-dom";
 // Style
 import './History.css';
 
-const URL_STRING_HISTORY = 'http://192.168.100.11:3001/api/v1/history';
-const URL_STRING_CART = 'http://192.168.100.11:3001/api/v1/cart';
+const URL_STRING_HISTORY = `${process.env.REACT_APP_URL_STRING}/history`;
+const URL_STRING_CART = `${process.env.REACT_APP_URL_STRING}/cart`;
 
 class History extends Component {
   constructor(props){
@@ -239,11 +239,12 @@ class History extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="col-12">
+                {/* <div className="col-12">
                   <h3 className="my-2 text-dark">History</h3>
-                </div>
+                </div> */}
                 <div className="col-12">
                   <div className="card">
+                    <p className="p-3 pb-0 mb-0">Recent Order</p>
                     <table className="table">
                       <thead>
                         <tr>
@@ -274,6 +275,7 @@ class History extends Component {
                               // this.getDetailCart(i);
                               // console.log(this.state.cart_detail)
                               // console.log('-');
+                              var date = new Date(cart.created_at);
                               return (
                                 <tr key={cart.id_cart}>
                                   <td>
@@ -286,7 +288,7 @@ class History extends Component {
                                     {cart.name_user}
                                   </td>
                                   <td>
-                                    {cart.created_at}
+                                    {date.getUTCFullYear()} - 0{date.getUTCMonth()+1} - {date.getUTCDate()+1}
                                   </td>
                                   {/* <td>
                                     {

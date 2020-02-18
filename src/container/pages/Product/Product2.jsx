@@ -2,7 +2,7 @@
 import React, {Component, Fragment} from 'react';
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
-import Axios from 'axios';
+// import Axios from 'axios';
 import { connect } from "react-redux";
 import { postNewProduct, postNewStockProduct, patchNewProduct, deleteNewProduct } from "../../../redux/actions/product";
 
@@ -11,8 +11,8 @@ import { postNewProduct, postNewStockProduct, patchNewProduct, deleteNewProduct 
 // Style
 //import './Product2.css';
 
-const URL_STRING_PRODUCT = 'http://192.168.1.237:3001/api/v1/product';
-const URL_STRING_CATEGORY = 'http://192.168.1.237:3001/api/v1/category';
+const URL_STRING_PRODUCT = `${process.env.REACT_APP_URL_STRING}/product`;
+const URL_STRING_CATEGORY = `${process.env.REACT_APP_URL_STRING}/category`;
 let name_product, desc_product, image;
 
 class Product2 extends Component {
@@ -85,7 +85,7 @@ class Product2 extends Component {
   // }
   postProduct = form => {
     this.props.dispatch(postNewProduct(form));
-    setTimeout(this.getProduct, 100);
+    setTimeout(this.getProduct, 500);
     this.openAlert(this.state.formProduct.name_product, 'added');
     this.handleCancel();
   };
@@ -334,13 +334,16 @@ class Product2 extends Component {
       formStock: {
         stock: 1
       },
-      modalTitle: 'Add Product'
+      modalTitle: 'Add Product',
+      character_name: 0,
+      character_desc: 0
     });
     name_product = null;
     desc_product = null;
     image = null;
     document.getElementById('save').setAttribute('class', 'btn btn-secondary');
     document.getElementById('save').setAttribute('data-dismiss', '');
+    document.getElementById('invalid-image').setAttribute('class', 'text-danger p-2 d-none');
   }
 
   render (){
@@ -423,7 +426,7 @@ class Product2 extends Component {
           <div className="content">
             <div className="container-fluid">
               <div className="row">
-                <div className="col-lg-10">
+                <div className="col-md-10">
                   <div className="container">
                     <div className="row">
                       <div className="col-12">

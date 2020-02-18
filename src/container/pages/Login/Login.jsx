@@ -7,7 +7,7 @@ import Axios from 'axios';
 // Style
 import './Login.css';
 
-const URL_STRING_USER = 'http://192.168.1.237:3001/api/v1/login';
+const URL_STRING_USER = `${process.env.REACT_APP_URL_STRING}/login`;
 
 class Login extends Component {
   state = {
@@ -25,6 +25,7 @@ class Login extends Component {
       if(!response.data.token){
         console.log(response.data.msg);
         // this.setState({ msg: response.data.msg });
+        document.getElementById('alert').setAttribute('class','alert alert-danger alert-dismissible fade show d-block')
       }else{
         localStorage.setItem('Token', response.data.token)
         // this.setState({ login:false })
@@ -50,6 +51,9 @@ class Login extends Component {
   handleSubmit = () => {
     this.loginUser();
   }
+  close = () => {
+    document.getElementById('alert').setAttribute('class','alert alert-danger alert-dismissible fade show d-none')
+  }
   render (){
     return (
       <div>
@@ -58,38 +62,45 @@ class Login extends Component {
             <div className="row">
               <div className="col-12">
               <center>
-              <img src="assets/dist/img/segi6_gray.png" alt="" className="img-login mr-2"/>
+              <img src="assets/dist/img/logo.png" alt="" className="img-login mr-2"/>
               </center>
               </div>
             </div>
           </div>
         </div>
-        <div class="login-page">
-          <div class="login-box">
-            <div class="login-logo">   
-            <b>Tosm</b>Cafe
+        <div className="login-page">
+          <div className="login-box">
+            <div className="login-logo">   
+            <b>Arcademy </b>Cafe
             </div>
-            <div class="card">
-              <div class="card-body login-card-body mb-2">
-                <p class="login-box-msg">Sign in</p>
-                  <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Username" value={this.state.formUser.username} onChange={this.handleFormChange} name="username" />
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <span class="fas fa-envelope"></span>
+            <div className="card">
+              <div className="card-body login-card-body mb-2">
+                <p className="login-box-msg">Sign in</p>
+                  
+                  <div className="alert alert-danger alert-dismissible fade show d-none" id="alert" role="alert">
+                    <small id="text-alert">incorrect username / password</small>
+                    <button type="button" className="close" aria-label="Close" onClick={this.close}>
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div className="input-group mb-3">
+                    <input type="text" className="form-control" placeholder="Username" value={this.state.formUser.username} onChange={this.handleFormChange} name="username" />
+                    <div className="input-group-append">
+                      <div className="input-group-text">
+                        <span className="fas fa-envelope"></span>
                       </div>
                     </div>
                   </div>
-                  <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Password" value={this.state.formUser.password} onChange={this.handleFormChange} name="password" />
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <span class="fas fa-lock"></span>
+                  <div className="input-group mb-3">
+                    <input type="password" className="form-control" placeholder="Password" value={this.state.formUser.password} onChange={this.handleFormChange} name="password" />
+                    <div className="input-group-append">
+                      <div className="input-group-text">
+                        <span className="fas fa-lock"></span>
                       </div>
                     </div>
                   </div>
-                  <div class="col-4">
-                    <button class="btn btn-primary btn-block" onClick={this.handleSubmit}>Sign In</button>
+                  <div className="mb-2">
+                    <button className="btn btn-primary btn-block" onClick={this.handleSubmit}>Sign In</button>
                   </div>
               </div>
             </div>

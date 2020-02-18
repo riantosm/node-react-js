@@ -3,15 +3,17 @@ import React, {Component, Fragment} from 'react';
 import Axios from 'axios';
 import CartProduct from './CartProduct';
 import CartProductOrder from './CartProductOrder';
+import { connect } from "react-redux";
+import { getSearchProduct } from "../../../redux/actions/product";
 
 // pages
 
 // Style
 import './Cart.css';
 
-const URL_STRING_PRODUCT = 'http://192.168.100.11:3001/api/v1/product';
-const URL_STRING_CATEGORY = 'http://192.168.100.11:3001/api/v1/category';
-const URL_STRING_CART = 'http://192.168.100.11:3001/api/v1/cart';
+const URL_STRING_PRODUCT = `${process.env.REACT_APP_URL_STRING}/product`;
+const URL_STRING_CATEGORY = `${process.env.REACT_APP_URL_STRING}/category`;
+const URL_STRING_CART = `${process.env.REACT_APP_URL_STRING}/cart`;
 
 var timeInMs = Date.now();
 class Cart extends Component {
@@ -55,30 +57,48 @@ class Cart extends Component {
       })
     })
   }
-  getProductNsearch = (params) => {
+  getProductNsearch = async (params) => {
     let param = '';
     if(params === '0' || params === ''){
       param = '0'
     }else{
       param = params;
     }
-    Axios.get(`${URL_STRING_PRODUCT}/${param}/search`, {
-      headers: {
-        token: localStorage.getItem('Token')
-      }  
-    })
-    .then((response) => {
-      // console.log(response.data.result.length);
-      if(response.data.result.length === 0){
-        document.getElementById('product-empty').setAttribute('class', 'd-block');
-      }else{
-        document.getElementById('product-empty').setAttribute('class', 'd-none');
-      }
-      this.setState({
-        product_search: response.data.result,
-      })
-    })
-  }
+    await this.props.dispatch(getSearchProduct(param))
+    this.setState({
+      product_search: this.props.product.product_search
+    });
+    console.log(this.props.product);
+    if(this.props.product.product_search.length === 0){
+      document.getElementById('product-empty').setAttribute('class', 'd-block');
+    }else{
+      document.getElementById('product-empty').setAttribute('class', 'd-none');
+    }
+  };
+  // getProductNsearch = (params) => {
+  //   let param = '';
+  //   if(params === '0' || params === ''){
+  //     param = '0'
+  //   }else{
+  //     param = params;
+  //   }
+  //   Axios.get(`${URL_STRING_PRODUCT}/${param}/search`, {
+  //     headers: {
+  //       token: localStorage.getItem('Token')
+  //     }  
+  //   })
+  //   .then((response) => {
+  //     // console.log(response.data.result.length);
+  //     if(response.data.result.length === 0){
+  //       document.getElementById('product-empty').setAttribute('class', 'd-block');
+  //     }else{
+  //       document.getElementById('product-empty').setAttribute('class', 'd-none');
+  //     }
+  //     this.setState({
+  //       product_search: response.data.result,
+  //     })
+  //   })
+  // }
   addCart = () => {
     // console.log(this.state.name_customer);
     // console.log(this.state.cart.length);
@@ -486,4 +506,10 @@ class Cart extends Component {
   }
 }
 
-export default Cart;
+const mapStateToProps = ({ product }) => {
+  return {
+    product // product: product
+  };
+};
+
+export default connect(mapStateToProps)(Cart);

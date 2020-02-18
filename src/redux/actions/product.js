@@ -11,6 +11,17 @@ export const getAllProduct = () => {
   };
 };
 
+export const getSearchProduct = (data) => {
+  return {
+    type: "GET_search_product", // string yang mendiskripsikan perintah
+    payload: Axios.get(`${process.env.REACT_APP_URL_STRING}/product/${data}/search`, {
+      headers: {
+        token: localStorage.getItem("Token")
+      }
+    })
+  };
+};
+
 export const postNewProduct = name => {
   const data = new FormData();
   data.append('image', name.image);
@@ -22,14 +33,7 @@ export const postNewProduct = name => {
   return {
     type: "POST_product",
     payload: Axios.post(
-      `${process.env.REACT_APP_URL_STRING}/product`,
-      {
-        image: name.image,
-        name_product: name.name_product,
-        desc_product: name.desc_product,
-        price_product: name.price_product,
-        id_category: name.id_category
-      },
+      `${process.env.REACT_APP_URL_STRING}/product`, data,
       {
         headers: {
           token: localStorage.getItem("Token")
@@ -67,14 +71,7 @@ export const patchNewProduct = name => {
   return {
     type: "PATCH_product",
     payload: Axios.patch(
-      `${process.env.REACT_APP_URL_STRING}/product/${name.id_product}`,
-      {
-        image: name.image,
-        name_product: name.name_product,
-        desc_product: name.desc_product,
-        price_product: name.price_product,
-        id_category: name.id_category
-      },
+      `${process.env.REACT_APP_URL_STRING}/product/${name.id_product}`, data,
       {
         headers: {
           token: localStorage.getItem("Token")

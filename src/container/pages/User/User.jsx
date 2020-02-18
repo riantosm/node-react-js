@@ -2,7 +2,7 @@
 import React, {Component, Fragment} from 'react';
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
-import Axios from 'axios';
+// import Axios from 'axios';
 import { connect } from "react-redux";
 import { postNewUser } from "../../../redux/actions/user";
 
@@ -11,7 +11,7 @@ import { postNewUser } from "../../../redux/actions/user";
 // Style
 //import './User.css';
 
-const URL_STRING_USER = 'http://192.168.100.11:3001/api/v1/user';
+const URL_STRING_USER = `${process.env.REACT_APP_URL_STRING}/user`;
 
 class User extends Component {
   constructor(props){
@@ -167,10 +167,10 @@ class User extends Component {
           <div className="content">
             <div className="container-fluid">
               <div className="row">
-                <div className="col-lg-8">
+                <div className="col-md-10">
                   <div className="container">
                     <div className="row">
-                      <div className="col-12">
+                      <div className="col-10">
                         <div className="btn btn-primary mt-5 mb-3 cursor" data-toggle="modal" data-target="#modalAddUpdate">
                           Tambah
                         </div>

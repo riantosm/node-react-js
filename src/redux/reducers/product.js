@@ -1,5 +1,6 @@
 const initialValue = {
   productData: [],
+  product_search: [],
   errMsg: [],
   isPending: false,
   isRejected: false,
@@ -28,6 +29,27 @@ const productReducer = (state = initialValue, action) => {
         isPending: false,
         isFulfilled: true,
         productData: action.payload.data.result
+      };
+    case "GET_SEARCH_PRODUCT_PENDING":
+      return {
+        ...state,
+        isPending: true,
+        isRejected: false,
+        isFulfilled: false
+      };
+    case "GET_SEARCH_PRODUCT_REJECTED":
+      return {
+        ...state,
+        isPending: false,
+        isRejected: true,
+        errMsg: action.payload.data
+      };
+    case "GET_SEARCH_PRODUCT_FULFILLED":
+      return {
+        ...state,
+        isPending: false,
+        isFulfilled: true,
+        product_search: action.payload.data.result
       };
     case "POST_PRODUCT_PENDING":
       return {

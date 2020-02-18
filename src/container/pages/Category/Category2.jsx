@@ -2,7 +2,7 @@
 import React, {Component, Fragment} from 'react';
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
-import Axios from 'axios';
+// import Axios from 'axios';
 import { connect } from "react-redux";
 import { postNewCategory, patchNewCategory, deleteNewCategory } from "../../../redux/actions/category";
 
@@ -11,7 +11,7 @@ import { postNewCategory, patchNewCategory, deleteNewCategory } from "../../../r
 // Style
 //import './Product2.css';
 
-const URL_STRING_CATEGORY = 'http://192.168.100.11:3001/api/v1/category';
+const URL_STRING_CATEGORY = `${process.env.REACT_APP_URL_STRING}/category`;
 
 class Category2 extends Component {
   constructor(props){
@@ -235,7 +235,7 @@ class Category2 extends Component {
           <div className="content">
             <div className="container-fluid">
               <div className="row">
-                <div className="col-lg-8">
+                <div className="col-md-10">
                   <div className="container">
                     <div className="row">
                       <div className="col-12">
