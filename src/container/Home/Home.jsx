@@ -19,6 +19,7 @@ import User from "../pages/User/User";
 
 // Style
 import "./Home.css";
+import UserRedux from "../pages/User/UserRedux";
 
 class Home extends Component {
   render (){

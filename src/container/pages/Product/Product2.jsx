@@ -4,7 +4,7 @@ import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
 // import Axios from 'axios';
 import { connect } from "react-redux";
-import { postNewProduct, postNewStockProduct, patchNewProduct, deleteNewProduct } from "../../../redux/actions/product";
+import { getAllProduct, postNewProduct, postNewStockProduct, patchNewProduct, deleteNewProduct } from "../../../redux/actions/product";
 
 // pages
 
@@ -20,6 +20,7 @@ class Product2 extends Component {
     super(props);
     this.state={
       categorys:[],
+      productData:[],
       products:[],
       formProduct: {
         id_product:'',
@@ -64,6 +65,12 @@ class Product2 extends Component {
       this.setState({products: products.result})
     })
   }
+  getProducts = async () => {
+    await this.props.dispatch(getAllProduct())
+    this.setState({
+      productData: this.props.product.productData
+    });
+  };
   // addProduct = () => {
   //   const data = new FormData();
   //   data.append('image', this.state.formProduct.image);
@@ -175,6 +182,7 @@ class Product2 extends Component {
 
   componentDidMount(){
     this.getProduct();
+    this.getProducts();
     this.getCategory();
   }
   

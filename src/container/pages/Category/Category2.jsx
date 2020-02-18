@@ -4,7 +4,7 @@ import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
 // import Axios from 'axios';
 import { connect } from "react-redux";
-import { postNewCategory, patchNewCategory, deleteNewCategory } from "../../../redux/actions/category";
+import { getAllCategory, postNewCategory, patchNewCategory, deleteNewCategory } from "../../../redux/actions/category";
 
 // pages
 
@@ -17,6 +17,7 @@ class Category2 extends Component {
   constructor(props){
     super(props);
     this.state={
+      categoryData: [],
       categorys: [],
       formCategory: {
         id_category:'',
@@ -38,6 +39,12 @@ class Category2 extends Component {
       this.setState({categorys: categorys.result})
     })
   }
+  getCategorys = async () => {
+    await this.props.dispatch(getAllCategory())
+    this.setState({
+      categoryData: this.props.category.categoryData
+    });
+  };
   // addCategory = () => {
   //   Axios.post(URL_STRING_CATEGORY, this.state.formCategory, {
   //     headers: {
@@ -118,6 +125,7 @@ class Category2 extends Component {
   }
 
   componentDidMount(){
+    this.getCategorys();
     this.getCategory();
   }
 

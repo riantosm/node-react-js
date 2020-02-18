@@ -1,6 +1,6 @@
 const initialValue = {
   productData: [],
-  product_search: [],
+  productSearch: [],
   errMsg: [],
   isPending: false,
   isRejected: false,
@@ -49,7 +49,7 @@ const productReducer = (state = initialValue, action) => {
         ...state,
         isPending: false,
         isFulfilled: true,
-        product_search: action.payload.data.result
+        productSearch: action.payload.data.result
       };
     case "POST_PRODUCT_PENDING":
       return {

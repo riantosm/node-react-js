@@ -4,7 +4,7 @@ import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
 // import Axios from 'axios';
 import { connect } from "react-redux";
-import { postNewUser } from "../../../redux/actions/user";
+import { postNewUser, getAllUser } from "../../../redux/actions/user";
 
 // pages
 
@@ -17,6 +17,7 @@ class User extends Component {
   constructor(props){
     super(props);
     this.state={
+      userData: [],
       users: [],
       formUser: {
         id_user:'',
@@ -41,6 +42,12 @@ class User extends Component {
       this.setState({users: users.result})
     })
   }
+  getUsers = async () => {
+    await this.props.dispatch(getAllUser())
+    this.setState({
+      userData: this.props.user.userData
+    });
+  };
   // addUser = () => {
   //   Axios.post(URL_STRING_USER, this.state.formUser, {
   //     headers: {
@@ -75,13 +82,30 @@ class User extends Component {
 
   componentDidMount(){
     this.getUser();
+    this.getUsers();
   }
   
-  handleFormChange = (event) => {
+  handleFormChangeName = (event) => {
     let formUserNew = {...this.state.formUser};
     formUserNew[event.target.name] = event.target.value;
     // validation{
     let patt = /[a-zA-Z0-9 ]+$/;
+    let res_name = formUserNew.name_user.match(patt);
+    if(res_name == null){
+      return false;
+    }
+    document.getElementById('save').setAttribute('class', 'btn btn-primary');
+    document.getElementById('save').setAttribute('data-dismiss', 'modal');
+    // }validation
+    this.setState({
+      formUser: formUserNew
+    })
+  }
+  handleFormChange = (event) => {
+    let formUserNew = {...this.state.formUser};
+    formUserNew[event.target.name] = event.target.value;
+    // validation{
+    let patt = /[a-z0-9]+$/;
     let res_name = formUserNew.name_user.match(patt);
     if(res_name == null){
       return false;
@@ -210,7 +234,7 @@ class User extends Component {
                 <table>
                   <tr>
                     <td>Name User : </td>
-                    <td><input type="text" value={this.state.formUser.name_user} name="name_user" onChange={this.handleFormChange} /></td>
+                    <td><input type="text" value={this.state.formUser.name_user} name="name_user" onChange={this.handleFormChangeName} /></td>
                   </tr>
                   <tr>
                     <td>Username : </td>

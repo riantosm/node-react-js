@@ -11,7 +11,7 @@ export const getAllProduct = () => {
   };
 };
 
-export const getSearchProduct = (data) => {
+export const getSearchProduct = data => {
   return {
     type: "GET_search_product", // string yang mendiskripsikan perintah
     payload: Axios.get(`${process.env.REACT_APP_URL_STRING}/product/${data}/search`, {

@@ -10,6 +10,7 @@ import { getSearchProduct } from "../../../redux/actions/product";
 
 // Style
 import './Cart.css';
+import CartProduct2 from './CartProduct2';
 
 const URL_STRING_PRODUCT = `${process.env.REACT_APP_URL_STRING}/product`;
 const URL_STRING_CATEGORY = `${process.env.REACT_APP_URL_STRING}/category`;
@@ -19,6 +20,7 @@ var timeInMs = Date.now();
 class Cart extends Component {
   state = {
     product:[],
+    products:[],
     product_search:[],
     total_price_order: 0,
     formCart:{
@@ -57,48 +59,66 @@ class Cart extends Component {
       })
     })
   }
-  getProductNsearch = async (params) => {
-    let param = '';
-    if(params === '0' || params === ''){
-      param = '0'
-    }else{
-      param = params;
-    }
-    await this.props.dispatch(getSearchProduct(param))
-    this.setState({
-      product_search: this.props.product.product_search
-    });
-    console.log(this.props.product);
-    if(this.props.product.product_search.length === 0){
-      document.getElementById('product-empty').setAttribute('class', 'd-block');
-    }else{
-      document.getElementById('product-empty').setAttribute('class', 'd-none');
-    }
-  };
-  // getProductNsearch = (params) => {
+  // getProductNsearch = async (params) => {
   //   let param = '';
   //   if(params === '0' || params === ''){
   //     param = '0'
   //   }else{
   //     param = params;
   //   }
-  //   Axios.get(`${URL_STRING_PRODUCT}/${param}/search`, {
-  //     headers: {
-  //       token: localStorage.getItem('Token')
-  //     }  
-  //   })
-  //   .then((response) => {
-  //     // console.log(response.data.result.length);
-  //     if(response.data.result.length === 0){
-  //       document.getElementById('product-empty').setAttribute('class', 'd-block');
-  //     }else{
-  //       document.getElementById('product-empty').setAttribute('class', 'd-none');
-  //     }
-  //     this.setState({
-  //       product_search: response.data.result,
-  //     })
-  //   })
-  // }
+  //   await this.props.dispatch(getSearchProduct(param))
+  //   this.setState({
+  //     product_search: this.props.product.product_search
+  //   });
+  //   console.log(this.props.product);
+  //   if(this.props.product.product_search.length === 0){
+  //     document.getElementById('product-empty').setAttribute('class', 'd-block');
+  //   }else{
+  //     document.getElementById('product-empty').setAttribute('class', 'd-none');
+  //   }
+  // };
+  getProductNsearch = (params) => {
+    let param = '';
+    if(params === '0' || params === ''){
+      param = '0'
+    }else{
+      param = params;
+    }
+    Axios.get(`${URL_STRING_PRODUCT}/${param}/search`, {
+      headers: {
+        token: localStorage.getItem('Token')
+      }  
+    })
+    .then((response) => {
+      // console.log(response.data.result.length);
+      if(response.data.result.length === 0){
+        document.getElementById('product-empty').setAttribute('class', 'd-block');
+      }else{
+        document.getElementById('product-empty').setAttribute('class', 'd-none');
+      }
+      this.setState({
+        product_search: response.data.result,
+      })
+    })
+  }
+  getProducts = (param) => {
+    Axios.get(`${URL_STRING_PRODUCT}/${param}/search`, {
+      headers: {
+        token: localStorage.getItem('Token')
+      }  
+    })
+    .then((response) => {
+      // console.log(response.data.result.length);
+      if(response.data.result.length === 0){
+        document.getElementById('product-empty').setAttribute('class', 'd-block');
+      }else{
+        document.getElementById('product-empty').setAttribute('class', 'd-none');
+      }
+      this.setState({
+        products: response.data.result,
+      })
+    })
+  }
   addCart = () => {
     // console.log(this.state.name_customer);
     // console.log(this.state.cart.length);
@@ -169,6 +189,7 @@ class Cart extends Component {
   componentDidMount(){
     this.getProductNsearch('0');
     this.getProduct();
+    this.getProducts('0');
   }
   // componentDidUpdate(){
   //   if(this.state.search!==''){
@@ -190,6 +211,15 @@ class Cart extends Component {
   handleSearch = (event) => {
     let searchNow = {...this.state.search};
     searchNow = event.target.value;
+    
+    console.log(searchNow);
+    if(searchNow !== ''){
+      document.getElementById('product_search').setAttribute('class','col-12');
+      document.getElementById('product_list').setAttribute('class','col-12 d-none');
+    }else{
+      document.getElementById('product_search').setAttribute('class','col-12 d-none');
+      document.getElementById('product_list').setAttribute('class','col-12');
+    }
 
     this.setState({
       search: searchNow
@@ -213,6 +243,8 @@ class Cart extends Component {
       document.getElementById(id_).setAttribute('class','d-block');
       document.getElementById('btn-checkout').setAttribute('class', 'd-block');
       document.getElementById('cart-empty').setAttribute('class', 'd-none');
+      document.getElementById('product_search').setAttribute('class','col-12 d-none');
+      document.getElementById('product_list').setAttribute('class','col-12');
     }, 100)
     const cartNew = [...this.state.cart, data];
     for(let x = 0; x < this.state.cart.length; x++){
@@ -367,13 +399,28 @@ class Cart extends Component {
                         </center>
                       </div>
                     </div>
-                    {
-                      this.state.product_search.map(product_search => {
-                        return (
-                          <CartProduct {...product_search} addFunc={this.handleAddFunc} />
-                        )
-                      })
-                    }
+                    <div className="col-12" id="product_list">
+                      <div className="row">
+                        {
+                          this.state.products.map(product => {
+                            return (
+                              <CartProduct {...product} addFunc={this.handleAddFunc} />
+                            )
+                          })
+                        }
+                      </div>
+                    </div>
+                    <div className="col-12 d-none" id="product_search">
+                      <div className="row">
+                        {
+                          this.state.product_search.map(product_search => {
+                            return (
+                              <CartProduct2 {...product_search} addFunc={this.handleAddFunc} />
+                            )
+                          })
+                        }
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
