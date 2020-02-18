@@ -317,7 +317,9 @@ class Cart extends Component {
                 <div className="col-sm-6">
                   {/* <h1 className="m-0 text-dark">Add items</h1> */}
                   {/* SEARCH FORM */}
-                  <input type="text" className="search" placeholder="Search item .." value={this.state.search} onChange={this.handleSearch} />
+                  <form method="post">
+                    <input type="text" className="search" placeholder="Search item .." value={this.state.search} onChange={this.handleSearch} />
+                  </form>
                 </div>{/* /.col */}
               </div>{/* /.row */}
             </div>{/* /.container-fluid */}

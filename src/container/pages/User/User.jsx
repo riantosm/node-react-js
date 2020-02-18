@@ -95,7 +95,7 @@ class User extends Component {
   }
   handleSubmit = () => {
     if(this.state.formUser.name_user === ''){
-      alert('Form belum diisi semua ..');
+      // alert('Form belum diisi semua ..');
     }else{ 
       // this.addUser(); 
       this.postUser(this.state.formUser); 

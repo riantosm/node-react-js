@@ -11,8 +11,8 @@ import { postNewProduct, postNewStockProduct, patchNewProduct, deleteNewProduct 
 // Style
 //import './Product2.css';
 
-const URL_STRING_PRODUCT = 'http://192.168.100.11:3001/api/v1/product';
-const URL_STRING_CATEGORY = 'http://192.168.100.11:3001/api/v1/category';
+const URL_STRING_PRODUCT = 'http://192.168.1.237:3001/api/v1/product';
+const URL_STRING_CATEGORY = 'http://192.168.1.237:3001/api/v1/category';
 let name_product, desc_product, image;
 
 class Product2 extends Component {
@@ -178,10 +178,33 @@ class Product2 extends Component {
     this.getCategory();
   }
   
+  handleFormChangePrice = (event) => {
+    let formProductNew = {...this.state.formProduct};
+    // validation{
+    let patt = /[0-9]+$/;
+    let res = event.target.value.match(patt);
+    formProductNew[event.target.name] = event.target.value;
+    if(event.target.name === 'price_product'){
+      if(event.target.value.search('-') > 0){
+        res = null;
+      }
+      if(event.target.value >= 1000000 || event.target.value < 0 ){
+        res = null;
+      }
+    }
+
+    if(res == null){
+      return false;
+    }
+    // }validation
+    this.setState({
+      formProduct: formProductNew
+    })
+  }
   handleFormChange = (event) => {
     let formProductNew = {...this.state.formProduct};
     // validation{
-    let patt = /[a-zA-Z0-9(),.+" -]+$/;
+    let patt = /[a-zA-Z0-9(),.+/" -]+$/;
     let res = event.target.value.match(patt);
 
     if(event.target.name === 'name_product'){
@@ -225,10 +248,12 @@ class Product2 extends Component {
         document.getElementById('save').setAttribute('class', 'btn btn-secondary');
         document.getElementById('save').setAttribute('data-dismiss', '');
       }
-      if(event.target.files[0].size){
-        if(event.target.files[0].size > 1040701 ){
-          document.getElementById('invalid-image').setAttribute('class', 'text-danger p-2 d-block');
-          image = null;
+      if(event.target.files[0]){
+        if(event.target.files[0].size){
+          if(event.target.files[0].size > 1040701 ){
+            document.getElementById('invalid-image').setAttribute('class', 'text-danger p-2 d-block');
+            image = null;
+          }
         }
       }
       formProductNew[event.target.name] = image;
@@ -284,7 +309,7 @@ class Product2 extends Component {
   }
   handleSubmit = () => {
     if(this.state.formProduct.name_product === '' || this.state.formProduct.desc_product === '' || this.state.formProduct.image === null){
-      alert('Form belum diisi semua ..');
+      // alert('Form belum diisi semua ..');
     }else{
       if(this.state.isUpdate){
         // this.updateProduct();
@@ -477,7 +502,7 @@ class Product2 extends Component {
                       </label>
                     </div>
                     <div className="col-9">
-                      <input type="number" className="form-control shadow" id="price_product" name="price_product" placeholder="" min="1000" max="1000000" value={this.state.formProduct.price_product} onChange={this.handleFormChange} />
+                      <input type="text" className="form-control shadow" id="price_product" name="price_product" placeholder="" min="1000" max="1000000" value={this.state.formProduct.price_product} onChange={this.handleFormChangePrice} />
                     </div>
                   </div>
                   <div className="form-group row">

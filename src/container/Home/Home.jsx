@@ -67,8 +67,8 @@ class Home extends Component {
             <aside className="main-sidebar sidebar-light-primary elevation-4">
               {/* Brand Logo */}
               <Link to="/" className="brand-link">
-                <img src="assets/dist/img/segi6_black.png" alt="Logo" className="brand-image img-circle elevation-3"  />
-                <span className="brand-text font-weight-normal">Tosm Cafe</span>
+                <img src="assets/dist/img/logo (2).png" alt="Logo" className="brand-image img-circle elevation-3"  />
+                <span className="brand-text font-weight">ArkaCafe</span>
               </Link>
               {/* Sidebar */}
               <div className="sidebar">
