@@ -193,7 +193,7 @@ class Product2 extends Component {
     let res = event.target.value.match(patt);
     formProductNew[event.target.name] = event.target.value;
     if(event.target.name === 'price_product'){
-      if(event.target.value.search('-') > 0){
+      if( event.target.value.search(/[0-9]+$/) > 0 ){
         res = null;
       }
       if(event.target.value >= 1000000 || event.target.value < 0 ){
@@ -216,6 +216,9 @@ class Product2 extends Component {
     let res = event.target.value.match(patt);
 
     if(event.target.name === 'name_product'){
+      if(event.target.value.search(patt) > 0){
+        res = null;
+      }
       name_product = event.target.value;
       if(name_product.length > 30){
         res = null;
@@ -226,6 +229,9 @@ class Product2 extends Component {
       }
     }
     if(event.target.name === 'desc_product'){
+      if(event.target.value.search(patt) > 0){
+        res = null;
+      }
       desc_product = event.target.value;
       if(desc_product.length > 100){
         res = null;
@@ -439,7 +445,7 @@ class Product2 extends Component {
                     <div className="row">
                       <div className="col-12">
                         <div className="btn btn-primary mb-3 cursor" data-toggle="modal" data-target="#modalAddUpdate">
-                          Tambah
+                          Add
                         </div>
                         <div className="alert alert-success alert-dismissible fade show d-none" id="alert" role="alert">
                           <span id="text-alert"></span>
@@ -508,7 +514,7 @@ class Product2 extends Component {
                         Price
                         <br/>
                         <sub className="text-secondary">
-                          (min: 1000. max: 1000000)
+                          (max: 1000000)
                         </sub>
                       </label>
                     </div>

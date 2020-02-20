@@ -67,7 +67,7 @@ export const patchNewProduct = name => {
   data.set('desc_product', name.desc_product);
   data.set('price_product', name.price_product);
   data.set('id_category', name.id_category);
-
+console.log(data);
   return {
     type: "PATCH_product",
     payload: Axios.patch(

@@ -247,8 +247,8 @@ class Category2 extends Component {
                   <div className="container">
                     <div className="row">
                       <div className="col-12">
-                        <div className="btn btn-primary mt-5 mb-3 cursor" data-toggle="modal" data-target="#modalAddUpdate">
-                          Tambah
+                        <div className="btn btn-primary mb-3 cursor" data-toggle="modal" data-target="#modalAddUpdate">
+                          Add
                         </div>
                         <div className="alert alert-success alert-dismissible fade show d-none" id="alert" role="alert">
                           <span id="text-alert"></span>

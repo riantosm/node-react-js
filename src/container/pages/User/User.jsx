@@ -106,7 +106,7 @@ class User extends Component {
     formUserNew[event.target.name] = event.target.value;
     // validation{
     let patt = /[a-z0-9]+$/;
-    let res_name = formUserNew.name_user.match(patt);
+    let res_name = formUserNew.username.match(patt);
     if(res_name == null){
       return false;
     }
@@ -152,7 +152,7 @@ class User extends Component {
         maxWidth: 50
       },
       {
-        Header: 'Name User',
+        Header: 'Full Name',
         accessor: 'name_user',
         style:{
           textAlign: "left"
@@ -195,8 +195,8 @@ class User extends Component {
                   <div className="container">
                     <div className="row">
                       <div className="col-10">
-                        <div className="btn btn-primary mt-5 mb-3 cursor" data-toggle="modal" data-target="#modalAddUpdate">
-                          Tambah
+                        <div className="btn btn-primary mb-3 cursor" data-toggle="modal" data-target="#modalAddUpdate">
+                          Add
                         </div>
                         <div className="alert alert-success alert-dismissible fade show d-none" id="alert" role="alert">
                           <span id="text-alert"></span>
@@ -233,7 +233,7 @@ class User extends Component {
               <center>
                 <table>
                   <tr>
-                    <td>Name User : </td>
+                    <td>Full Name : </td>
                     <td><input type="text" value={this.state.formUser.name_user} name="name_user" onChange={this.handleFormChangeName} /></td>
                   </tr>
                   <tr>
@@ -241,7 +241,7 @@ class User extends Component {
                     <td><input type="text" value={this.state.formUser.username} name="username" onChange={this.handleFormChange} /></td>
                   </tr>
                   <tr>
-                    <td>password : </td>
+                    <td>Password : </td>
                     <td><input type="password" value={this.state.formUser.password} name="password" onChange={this.handleFormChange} /></td>
                   </tr>
                 </table>

@@ -8,7 +8,7 @@ const CartProduct = ({id_product, image, name_product, price_product, stock_prod
   //   console.log('ada');
   // }
   return (
-    <div className="col-xl-3 col-lg-4 col-sm-6 p-0" id={id_product}>
+    <div className="col-xl-4 col-lg-6 col-sm-6 p-0" id={id_product}>
       <div className="card-cart p-0">
       <center>
         <div className="m-3 cart-conten">

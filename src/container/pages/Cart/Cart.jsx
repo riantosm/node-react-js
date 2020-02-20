@@ -4,7 +4,8 @@ import Axios from 'axios';
 import CartProduct from './CartProduct';
 import CartProductOrder from './CartProductOrder';
 import { connect } from "react-redux";
-import { getSearchProduct } from "../../../redux/actions/product";
+import { Link } from "react-router-dom"
+// import { getSearchProduct } from "../../../redux/actions/product";
 
 // pages
 
@@ -214,11 +215,11 @@ class Cart extends Component {
     
     console.log(searchNow);
     if(searchNow !== ''){
-      document.getElementById('product_search').setAttribute('class','col-12');
-      document.getElementById('product_list').setAttribute('class','col-12 d-none');
+      document.getElementById('product_search').setAttribute('class','col-9');
+      document.getElementById('product_list').setAttribute('class','col-md-9 d-none');
     }else{
-      document.getElementById('product_search').setAttribute('class','col-12 d-none');
-      document.getElementById('product_list').setAttribute('class','col-12');
+      document.getElementById('product_search').setAttribute('class','col-9 d-none');
+      document.getElementById('product_list').setAttribute('class','col-md-9');
     }
 
     this.setState({
@@ -243,8 +244,8 @@ class Cart extends Component {
       document.getElementById(id_).setAttribute('class','d-block');
       document.getElementById('btn-checkout').setAttribute('class', 'd-block');
       document.getElementById('cart-empty').setAttribute('class', 'd-none');
-      document.getElementById('product_search').setAttribute('class','col-12 d-none');
-      document.getElementById('product_list').setAttribute('class','col-12');
+      document.getElementById('product_search').setAttribute('class','col-md-9 d-none');
+      document.getElementById('product_list').setAttribute('class','col-md-9');
     }, 100)
     const cartNew = [...this.state.cart, data];
     for(let x = 0; x < this.state.cart.length; x++){
@@ -394,12 +395,12 @@ class Cart extends Component {
                       <div id="product-empty" className="d-none">
                         <center>
                           <img src="assets/dist/img/food-and-restaurant.png" alt=""/>
-                          <p className="empty-md">Your cart is empty</p>
-                          <p className="empty-sm">Please add some items from the menu</p>
+                          <p className="empty-md">Product not found !</p>
+                          <p className="empty-sm"><Link to="/product">Add product hire</Link></p>
                         </center>
                       </div>
                     </div>
-                    <div className="col-12" id="product_list">
+                    <div className="col-md-9" id="product_list">
                       <div className="row">
                         {
                           this.state.products.map(product => {
@@ -479,10 +480,10 @@ class Cart extends Component {
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="modalVerifyLabel">Delete data</h5>
+                <h5 className="modal-title" id="modalVerifyLabel">Checkout</h5>
               </div>
               <div className="modal-body">
-                Are you sure want delete this data?
+                Are you sure?
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>

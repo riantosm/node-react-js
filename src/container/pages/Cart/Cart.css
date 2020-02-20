@@ -58,11 +58,14 @@
   color: #82DE3A;
   outline: none;
 }
-.card-cart{
+.card-cart .media{
+  border-radius: 10px;
+}
+.card-cart img{
+border-radius: 10px;
 }
 .card-cart .added{
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
+  border-radius: 10px;
   cursor: pointer;
   background: rgba(0, 0, 0, 0.349);
   transition: 0.5s;
@@ -77,8 +80,7 @@
   font-size: 50px;
 }
 .card-cart .add{
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
+  border-radius: 10px;
   cursor: pointer;
   opacity: 0;
   transition: 0.5s;
@@ -114,4 +116,10 @@
 .empty-sm{
   font-size: 14px;
   color: #CECECE;
+}
+
+/*  */
+
+.cart-conte-n{
+  /* border: 1px solid black */
 }
