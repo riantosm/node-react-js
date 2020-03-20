@@ -1,35 +1,41 @@
 // Library
-import React, {Component, Fragment} from 'react';
+import React, { Component, Fragment } from 'react';
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
 // import Axios from 'axios';
-import { connect } from "react-redux";
-import { getAllProduct, postNewProduct, postNewStockProduct, patchNewProduct, deleteNewProduct } from "../../../redux/actions/product";
+import { connect } from 'react-redux';
+import {
+  getAllProduct,
+  postNewProduct,
+  postNewStockProduct,
+  patchNewProduct,
+  deleteNewProduct
+} from '../../../redux/actions/product';
 
 // pages
 
 // Style
-//import './Product2.css';
+//import './Product2.css';s
 
 const URL_STRING_PRODUCT = `${process.env.REACT_APP_URL_STRING}/product`;
 const URL_STRING_CATEGORY = `${process.env.REACT_APP_URL_STRING}/category`;
 let name_product, desc_product, image;
 
 class Product2 extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
-      categorys:[],
-      productData:[],
-      products:[],
+    this.state = {
+      categorys: [],
+      productData: [],
+      products: [],
       formProduct: {
-        id_product:'',
+        id_product: '',
         name_product: '',
         desc_product: '',
         stock_product: '',
         price_product: 1000,
-        image:null,
-        id_category:1
+        image: null,
+        id_category: 1
       },
       formStock: {
         stock: 1
@@ -40,33 +46,45 @@ class Product2 extends Component {
       selectedCa: true,
       character_name: 0,
       character_desc: 0
-    }
+    };
   }
   // API{
   getCategory = () => {
-    fetch(URL_STRING_CATEGORY, {
-      headers: {
-        token: localStorage.getItem('Token')
+    fetch(
+      URL_STRING_CATEGORY,
+      {
+        headers: {
+          token: localStorage.getItem('Token')
+        }
+      },
+      {
+        method: 'GET'
       }
-    },{
-      method: "GET"
-    }).then(response => response.json()).then(categorys => {
-      this.setState({categorys: categorys.result})
-    })
-  }
+    )
+      .then(response => response.json())
+      .then(categorys => {
+        this.setState({ categorys: categorys.result });
+      });
+  };
   getProduct = () => {
-    fetch(URL_STRING_PRODUCT, {
-      headers: {
-        token: localStorage.getItem('Token')
+    fetch(
+      URL_STRING_PRODUCT,
+      {
+        headers: {
+          token: localStorage.getItem('Token')
+        }
+      },
+      {
+        method: 'GET'
       }
-    },{
-      method: "GET"
-    }).then(response => response.json()).then(products => {
-      this.setState({products: products.result})
-    })
-  }
+    )
+      .then(response => response.json())
+      .then(products => {
+        this.setState({ products: products.result });
+      });
+  };
   getProducts = async () => {
-    await this.props.dispatch(getAllProduct())
+    await this.props.dispatch(getAllProduct());
     this.setState({
       productData: this.props.product.productData
     });
@@ -81,7 +99,7 @@ class Product2 extends Component {
   //   Axios.post(`${URL_STRING_PRODUCT}`, data, {
   //     headers: {
   //       token: localStorage.getItem('Token')
-  //     }  
+  //     }
   //   }).then((res) => {
   //     this.getProduct();
   //     this.openAlert(this.state.formProduct.name_product, 'added');
@@ -100,7 +118,7 @@ class Product2 extends Component {
   //   Axios.patch(`${URL_STRING_PRODUCT}/${id}/stock`, this.state.formStock, {
   //     headers: {
   //       token: localStorage.getItem('Token')
-  //     }  
+  //     }
   //   }).then((res) => {
   //     this.getProduct();
   //     this.openAlert(this.state.formProduct.name_product, 'stock added');
@@ -125,7 +143,7 @@ class Product2 extends Component {
   //   Axios.patch(`${URL_STRING_PRODUCT}/${this.state.formProduct.id_product}`, data, {
   //     headers: {
   //       token: localStorage.getItem('Token')
-  //     }  
+  //     }
   //   }).then((res) => {
   //     this.getProduct();
   //     this.openAlert(this.state.formProduct.name_product, 'updated');
@@ -149,7 +167,7 @@ class Product2 extends Component {
   //   Axios.delete(`${URL_STRING_PRODUCT}/${data}`, {
   //     headers: {
   //       token: localStorage.getItem('Token')
-  //     }  
+  //     }
   //   }).then((res) => {
   //     this.getProduct();
   //     this.openAlert(this.state.formProduct.name_product, 'deleted');
@@ -174,176 +192,192 @@ class Product2 extends Component {
     var text = `<strong id="status">Success!</strong> Data <strong>${name}</strong> successfully ${status}.`;
     document.getElementById('alert').setAttribute('class', attClass);
     document.getElementById('text-alert').innerHTML = text;
-  }
+  };
   closeAlert = () => {
     var attClass = 'alert alert-success alert-dismissible fade show d-none';
     document.getElementById('alert').setAttribute('class', attClass);
-  }
+  };
 
-  componentDidMount(){
+  componentDidMount() {
     this.getProduct();
     this.getProducts();
     this.getCategory();
   }
-  
-  handleFormChangePrice = (event) => {
-    let formProductNew = {...this.state.formProduct};
+
+  handleFormChangePrice = event => {
+    let formProductNew = { ...this.state.formProduct };
     // validation{
     let patt = /[0-9]+$/;
     let res = event.target.value.match(patt);
     formProductNew[event.target.name] = event.target.value;
-    if(event.target.name === 'price_product'){
-      if( event.target.value.search(/[0-9]+$/) > 0 ){
+    if (event.target.name === 'price_product') {
+      if (event.target.value.search(/[0-9]+$/) > 0) {
         res = null;
       }
-      if(event.target.value >= 1000000 || event.target.value < 0 ){
+      if (event.target.value >= 1000000 || event.target.value < 0) {
         res = null;
       }
     }
 
-    if(res == null){
+    if (res == null) {
       return false;
     }
     // }validation
     this.setState({
       formProduct: formProductNew
-    })
-  }
-  handleFormChange = (event) => {
-    let formProductNew = {...this.state.formProduct};
+    });
+  };
+  handleFormChange = event => {
+    let formProductNew = { ...this.state.formProduct };
     // validation{
     let patt = /[a-zA-Z0-9(),.+/" -]+$/;
     let res = event.target.value.match(patt);
 
-    if(event.target.name === 'name_product'){
-      if(event.target.value.search(patt) > 0){
+    if (event.target.name === 'name_product') {
+      if (event.target.value.search(patt) > 0) {
         res = null;
       }
       name_product = event.target.value;
-      if(name_product.length > 30){
+      if (name_product.length > 30) {
         res = null;
-      }else{
+      } else {
         this.setState({
           character_name: name_product.length
-        })
+        });
       }
     }
-    if(event.target.name === 'desc_product'){
-      if(event.target.value.search(patt) > 0){
+    if (event.target.name === 'desc_product') {
+      if (event.target.value.search(patt) > 0) {
         res = null;
       }
       desc_product = event.target.value;
-      if(desc_product.length > 100){
+      if (desc_product.length > 100) {
         res = null;
-      }else{
+      } else {
         this.setState({
           character_desc: desc_product.length
-        })
+        });
       }
     }
-    if(event.target.name === 'price_product'){
-      if(event.target.value > 1000000){
+    if (event.target.name === 'price_product') {
+      if (event.target.value > 1000000) {
         res = null;
       }
     }
-    if(event.target.name === 'image'){
-      if(event.target.value.search('.jpg') > 0){
+    if (event.target.name === 'image') {
+      if (event.target.value.search('.jpg') > 0) {
         image = event.target.files[0];
-        document.getElementById('invalid-image').setAttribute('class', 'text-danger p-2 d-none');
-      }else if(event.target.value.search('.jpeg') > 0){
+        document
+          .getElementById('invalid-image')
+          .setAttribute('class', 'text-danger p-2 d-none');
+      } else if (event.target.value.search('.jpeg') > 0) {
         image = event.target.files[0];
-        document.getElementById('invalid-image').setAttribute('class', 'text-danger p-2 d-none');
-      }else if(event.target.value.search('.png') > 0){
+        document
+          .getElementById('invalid-image')
+          .setAttribute('class', 'text-danger p-2 d-none');
+      } else if (event.target.value.search('.png') > 0) {
         image = event.target.files[0];
-        document.getElementById('invalid-image').setAttribute('class', 'text-danger p-2 d-none');
-      }else{
+        document
+          .getElementById('invalid-image')
+          .setAttribute('class', 'text-danger p-2 d-none');
+      } else {
         image = null;
-        document.getElementById('invalid-image').setAttribute('class', 'text-danger p-2 d-block');
-        document.getElementById('save').setAttribute('class', 'btn btn-secondary');
+        document
+          .getElementById('invalid-image')
+          .setAttribute('class', 'text-danger p-2 d-block');
+        document
+          .getElementById('save')
+          .setAttribute('class', 'btn btn-secondary');
         document.getElementById('save').setAttribute('data-dismiss', '');
       }
-      if(event.target.files[0]){
-        if(event.target.files[0].size){
-          if(event.target.files[0].size > 1040701 ){
-            document.getElementById('invalid-image').setAttribute('class', 'text-danger p-2 d-block');
+      if (event.target.files[0]) {
+        if (event.target.files[0].size) {
+          if (event.target.files[0].size > 1040701) {
+            document
+              .getElementById('invalid-image')
+              .setAttribute('class', 'text-danger p-2 d-block');
             image = null;
           }
         }
       }
       formProductNew[event.target.name] = image;
-    }else{
+    } else {
       formProductNew[event.target.name] = event.target.value;
     }
-    if(name_product != null && desc_product != null  && image != null){
+    if (name_product != null && desc_product != null && image != null) {
       document.getElementById('save').setAttribute('class', 'btn btn-primary');
       document.getElementById('save').setAttribute('data-dismiss', 'modal');
     }
-    if(res == null){
+    if (res == null) {
       return false;
     }
     // }validation
     this.setState({
       formProduct: formProductNew
-    })
-  }
-  handleStockChange = (event) => {
-    let formStockNew = {...this.state.formStock};
+    });
+  };
+  handleStockChange = event => {
+    let formStockNew = { ...this.state.formStock };
     formStockNew[event.target.name] = event.target.value;
     this.setState({
       formStock: formStockNew
-    })
-  }
-  handleUpdate = (data) => {
+    });
+  };
+  handleUpdate = data => {
     this.setState({
       formProduct: data,
       isUpdate: true,
       modalTitle: 'Update Product'
-    })
+    });
     document.getElementById('save').setAttribute('class', 'btn btn-primary');
     document.getElementById('save').setAttribute('data-dismiss', 'modal');
-  }
-  handleDetail = (data) => {
+  };
+  handleDetail = data => {
     this.setState({
       formProduct: data,
       isUpdate: true,
       modalTitle: 'Detail Product'
-    })
-  }
+    });
+  };
   addIt = () => {
     // console.log(this.state.formProduct.id_product);
     this.addStock(this.state.formProduct, this.state.formStock);
-  }
-  handleDelete = (data) => {
+  };
+  handleDelete = data => {
     this.setState({
       formProduct: data
-    })
-  }
+    });
+  };
   deleteIt = () => {
     this.deleteProduct(this.state.formProduct);
-  }
+  };
   handleSubmit = () => {
-    if(this.state.formProduct.name_product === '' || this.state.formProduct.desc_product === '' || this.state.formProduct.image === null){
+    if (
+      this.state.formProduct.name_product === '' ||
+      this.state.formProduct.desc_product === '' ||
+      this.state.formProduct.image === null
+    ) {
       // alert('Form belum diisi semua ..');
-    }else{
-      if(this.state.isUpdate){
+    } else {
+      if (this.state.isUpdate) {
         // this.updateProduct();
         this.patchProduct(this.state.formProduct);
-      }else{
+      } else {
         this.postProduct(this.state.formProduct);
         // this.addProduct();
       }
     }
-  }
+  };
   handleCancel = () => {
     this.setState({
       isUpdate: false,
       formProduct: {
-        id_product:'',
+        id_product: '',
         name_product: '',
         desc_product: '',
         price_product: 1000,
-        image:null,
-        id_category:1
+        image: null,
+        id_category: 1
       },
       formStock: {
         stock: 1
@@ -357,16 +391,18 @@ class Product2 extends Component {
     image = null;
     document.getElementById('save').setAttribute('class', 'btn btn-secondary');
     document.getElementById('save').setAttribute('data-dismiss', '');
-    document.getElementById('invalid-image').setAttribute('class', 'text-danger p-2 d-none');
-  }
+    document
+      .getElementById('invalid-image')
+      .setAttribute('class', 'text-danger p-2 d-none');
+  };
 
-  render (){
+  render() {
     const columns = [
       {
         Header: 'ID',
         accessor: 'id_product',
-        style:{
-          textAlign: "center"
+        style: {
+          textAlign: 'center'
         },
         width: 50,
         minWidth: 50,
@@ -375,8 +411,8 @@ class Product2 extends Component {
       {
         Header: 'Product Name',
         accessor: 'name_product',
-        style:{
-          textAlign: "left"
+        style: {
+          textAlign: 'left'
         },
         width: 200,
         minWidth: 200,
@@ -385,8 +421,8 @@ class Product2 extends Component {
       {
         Header: 'Price',
         accessor: 'price_product',
-        style:{
-          textAlign: "left"
+        style: {
+          textAlign: 'left'
         },
         width: 200,
         minWidth: 200,
@@ -395,8 +431,8 @@ class Product2 extends Component {
       {
         Header: 'Category',
         accessor: 'name_category',
-        style:{
-          textAlign: "left"
+        style: {
+          textAlign: 'left'
         },
         width: 200,
         minWidth: 200,
@@ -405,15 +441,36 @@ class Product2 extends Component {
       {
         Header: 'Action',
         Cell: props => {
-          return(
+          return (
             <div>
-              <button className="btn btn-primary btn-sm cursor" onClick={() => this.handleDetail(props.original)} data-toggle="modal" data-target="#modalDetail">Detail</button>
-              <button className="btn btn-info btn-sm cursor ml-3" onClick={() => this.handleUpdate(props.original)} data-toggle="modal" data-target="#modalAddUpdate">Edit</button>
-              <button className="btn btn-danger btn-sm cursor ml-3" data-toggle="modal" data-target="#modalDelete" onClick={() => {
-                this.handleDelete(props.original)
-              }}>Delete</button>
+              <button
+                className="btn btn-primary btn-sm cursor"
+                onClick={() => this.handleDetail(props.original)}
+                data-toggle="modal"
+                data-target="#modalDetail"
+              >
+                Detail
+              </button>
+              <button
+                className="btn btn-info btn-sm cursor ml-3"
+                onClick={() => this.handleUpdate(props.original)}
+                data-toggle="modal"
+                data-target="#modalAddUpdate"
+              >
+                Edit
+              </button>
+              <button
+                className="btn btn-danger btn-sm cursor ml-3"
+                data-toggle="modal"
+                data-target="#modalDelete"
+                onClick={() => {
+                  this.handleDelete(props.original);
+                }}
+              >
+                Delete
+              </button>
             </div>
-          )
+          );
         },
         sortable: false,
         filterable: false,
@@ -421,7 +478,7 @@ class Product2 extends Component {
         minWidth: 200,
         maxWidth: 200
       }
-    ]
+    ];
     return (
       <Fragment>
         <div className="content-wrapper pb-5">
@@ -431,9 +488,12 @@ class Product2 extends Component {
               <div className="row mb-2">
                 <div className="col-sm-6">
                   <h1 className="m-0 text-dark">Product list</h1>
-                </div>{/* /.col */}
-              </div>{/* /.row */}
-            </div>{/* /.container-fluid */}
+                </div>
+                {/* /.col */}
+              </div>
+              {/* /.row */}
+            </div>
+            {/* /.container-fluid */}
           </div>
           {/* /.content-header */}
           {/* Main content */}
@@ -444,12 +504,25 @@ class Product2 extends Component {
                   <div className="container">
                     <div className="row">
                       <div className="col-12">
-                        <div className="btn btn-primary mb-3 cursor" data-toggle="modal" data-target="#modalAddUpdate">
+                        <div
+                          className="btn btn-primary mb-3 cursor"
+                          data-toggle="modal"
+                          data-target="#modalAddUpdate"
+                        >
                           Add
                         </div>
-                        <div className="alert alert-success alert-dismissible fade show d-none" id="alert" role="alert">
+                        <div
+                          className="alert alert-success alert-dismissible fade show d-none"
+                          id="alert"
+                          role="alert"
+                        >
                           <span id="text-alert"></span>
-                          <button type="button" className="close" onClick={this.closeAlert} aria-label="Close">
+                          <button
+                            type="button"
+                            className="close"
+                            onClick={this.closeAlert}
+                            aria-label="Close"
+                          >
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
@@ -466,17 +539,27 @@ class Product2 extends Component {
                   </div>
                 </div>
               </div>
-            {/* /.row */}
-            </div>{/* /.container-fluid */}
+              {/* /.row */}
+            </div>
+            {/* /.container-fluid */}
           </div>
           {/* /.content */}
         </div>
         {/* add & update */}
-        <div className="modal fade" id="modalAddUpdate" data-backdrop="static" role="dialog" aria-labelledby="modalAddUpdateTitle" aria-hidden="true">
+        <div
+          className="modal fade"
+          id="modalAddUpdate"
+          data-backdrop="static"
+          role="dialog"
+          aria-labelledby="modalAddUpdateTitle"
+          aria-hidden="true"
+        >
           <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="modalAddUpdateTitle">{this.state.modalTitle}</h5>
+                <h5 className="modal-title" id="modalAddUpdateTitle">
+                  {this.state.modalTitle}
+                </h5>
               </div>
               <div className="modal-body">
                 <form encType="multipart/form-data">
@@ -484,42 +567,66 @@ class Product2 extends Component {
                     <div className="col-3">
                       <label htmlFor="name_product">
                         Name
-                        <br/>
+                        <br />
                         <sub className="text-secondary">
                           (character {this.state.character_name}/30)
                         </sub>
                       </label>
                     </div>
                     <div className="col-9">
-                      <input type="text" className="form-control shadow" id="name_product" name="name_product" placeholder="" value={this.state.formProduct.name_product} onChange={this.handleFormChange} require="true" />
+                      <input
+                        type="text"
+                        className="form-control shadow"
+                        id="name_product"
+                        name="name_product"
+                        placeholder=""
+                        value={this.state.formProduct.name_product}
+                        onChange={this.handleFormChange}
+                        require="true"
+                      />
                     </div>
                   </div>
                   <div className="form-group row">
-                  <div className="col-3">
-                    <label htmlFor="desc_product">
-                      Description
-                      <br/>
-                      <sub className="text-secondary">
-                        (character {this.state.character_desc}/100)
-                      </sub>
-                    </label>
-                  </div>
-                  <div className="col-9">
-                    <textarea className="form-control shadow" id="desc_product" name="desc_product" placeholder="" value={this.state.formProduct.desc_product} onChange={this.handleFormChange} />
+                    <div className="col-3">
+                      <label htmlFor="desc_product">
+                        Description
+                        <br />
+                        <sub className="text-secondary">
+                          (character {this.state.character_desc}/100)
+                        </sub>
+                      </label>
+                    </div>
+                    <div className="col-9">
+                      <textarea
+                        className="form-control shadow"
+                        id="desc_product"
+                        name="desc_product"
+                        placeholder=""
+                        value={this.state.formProduct.desc_product}
+                        onChange={this.handleFormChange}
+                      />
                     </div>
                   </div>
                   <div className="form-group row">
                     <div className="col-3">
                       <label htmlFor="price_product">
                         Price
-                        <br/>
-                        <sub className="text-secondary">
-                          (max: 1000000)
-                        </sub>
+                        <br />
+                        <sub className="text-secondary">(max: 1000000)</sub>
                       </label>
                     </div>
                     <div className="col-9">
-                      <input type="text" className="form-control shadow" id="price_product" name="price_product" placeholder="" min="1000" max="1000000" value={this.state.formProduct.price_product} onChange={this.handleFormChangePrice} />
+                      <input
+                        type="text"
+                        className="form-control shadow"
+                        id="price_product"
+                        name="price_product"
+                        placeholder=""
+                        min="1000"
+                        max="1000000"
+                        value={this.state.formProduct.price_product}
+                        onChange={this.handleFormChangePrice}
+                      />
                     </div>
                   </div>
                   <div className="form-group row">
@@ -527,20 +634,37 @@ class Product2 extends Component {
                       <label htmlFor="productName">Category</label>
                     </div>
                     <div className="col-9">
-                      <select className="custom-select shadow" name="id_category" onChange={this.handleFormChange}>
-                        {
-                          this.state.categorys.map(category => {
-                            if(this.state.formProduct.id_category === category.id_category){
-                              return (
-                                <option key={category.id_category} value={category.id_category} selected> {category.name_category}</option>
-                              )
-                            }else{
-                              return (
-                                <option key={category.id_category} value={category.id_category}>{category.name_category}</option>
-                              )
-                            }
-                          })
-                        }
+                      <select
+                        className="custom-select shadow"
+                        name="id_category"
+                        onChange={this.handleFormChange}
+                      >
+                        {this.state.categorys.map(category => {
+                          if (
+                            this.state.formProduct.id_category ===
+                            category.id_category
+                          ) {
+                            return (
+                              <option
+                                key={category.id_category}
+                                value={category.id_category}
+                                selected
+                              >
+                                {' '}
+                                {category.name_category}
+                              </option>
+                            );
+                          } else {
+                            return (
+                              <option
+                                key={category.id_category}
+                                value={category.id_category}
+                              >
+                                {category.name_category}
+                              </option>
+                            );
+                          }
+                        })}
                       </select>
                     </div>
                   </div>
@@ -548,7 +672,7 @@ class Product2 extends Component {
                     <div className="col-3">
                       <label htmlFor="productImage">
                         Image
-                        <br/>
+                        <br />
                         <sub className="text-secondary">
                           (.png / .jpg / .jpeg & max size 1mb )
                         </sub>
@@ -556,11 +680,22 @@ class Product2 extends Component {
                     </div>
                     <div className="col-9">
                       <div className="custom-file shadow">
-                        <input type="file" className="custom-file-input" id="image" name="image" onChange={this.handleFormChange} />
-                        <label className="custom-file-label" htmlFor="image">Choose file</label>
+                        <input
+                          type="file"
+                          className="custom-file-input"
+                          id="image"
+                          name="image"
+                          onChange={this.handleFormChange}
+                        />
+                        <label className="custom-file-label" htmlFor="image">
+                          Choose file
+                        </label>
                       </div>
-                      <br/>
-                      <sub className="text-danger pl-2 d-none" id="invalid-image">
+                      <br />
+                      <sub
+                        className="text-danger pl-2 d-none"
+                        id="invalid-image"
+                      >
                         Invalid image
                       </sub>
                     </div>
@@ -568,25 +703,52 @@ class Product2 extends Component {
                 </form>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.handleCancel}>Close</button>
-                <button type="button" className="btn btn-secondary" id="save" onClick={this.handleSubmit}>Save changes</button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-dismiss="modal"
+                  onClick={this.handleCancel}
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  id="save"
+                  onClick={this.handleSubmit}
+                >
+                  Save changes
+                </button>
               </div>
             </div>
           </div>
         </div>
         {/* detail */}
-        <div className="modal fade" id="modalDetail" data-backdrop="static" role="dialog" aria-labelledby="modalDetailTitle" aria-hidden="true">
+        <div
+          className="modal fade"
+          id="modalDetail"
+          data-backdrop="static"
+          role="dialog"
+          aria-labelledby="modalDetailTitle"
+          aria-hidden="true"
+        >
           <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="modalDetailTitle">{this.state.modalTitle}</h5>
+                <h5 className="modal-title" id="modalDetailTitle">
+                  {this.state.modalTitle}
+                </h5>
               </div>
               <div className="modal-body">
                 <table className="table table-striped">
                   <tbody>
                     <tr>
                       <td colSpan="2">
-                      <img src={this.state.formProduct.image} alt="" width="100%"/>
+                        <img
+                          src={this.state.formProduct.image}
+                          alt=""
+                          width="100%"
+                        />
                       </td>
                     </tr>
                     <tr>
@@ -613,60 +775,133 @@ class Product2 extends Component {
                 </table>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#addStock">Add Stock</button>
-                <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.handleCancel}>Close</button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-dismiss="modal"
+                  data-toggle="modal"
+                  data-target="#addStock"
+                >
+                  Add Stock
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-dismiss="modal"
+                  onClick={this.handleCancel}
+                >
+                  Close
+                </button>
               </div>
             </div>
           </div>
         </div>
         {/*  */}
-        <div className="modal fade" id="addStock" tabIndex="-1" role="dialog" aria-labelledby="addStockLabel" aria-hidden="true">
+        <div
+          className="modal fade"
+          id="addStock"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="addStockLabel"
+          aria-hidden="true"
+        >
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="addStockLabel">Add Stock ({this.state.formProduct.name_product})</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <h5 className="modal-title" id="addStockLabel">
+                  Add Stock ({this.state.formProduct.name_product})
+                </h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div className="modal-body">
                 <table>
                   <thead>
-                  <tr>
-                    <td>Stock</td>
-                    <td>
-                      <input type="number" min="1" max="1000" name="stock" value={this.state.formStock.stock} onChange={this.handleStockChange} />
-                    </td>
-                  </tr>
+                    <tr>
+                      <td>Stock</td>
+                      <td>
+                        <input
+                          type="number"
+                          min="1"
+                          max="1000"
+                          name="stock"
+                          value={this.state.formStock.stock}
+                          onChange={this.handleStockChange}
+                        />
+                      </td>
+                    </tr>
                   </thead>
                 </table>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.handleCancel}>Close</button>
-                <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={this.addIt}>Add</button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-dismiss="modal"
+                  onClick={this.handleCancel}
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-dismiss="modal"
+                  onClick={this.addIt}
+                >
+                  Add
+                </button>
               </div>
             </div>
           </div>
         </div>
         {/* delete */}
-        <div className="modal fade" id="modalDelete" data-backdrop="static" role="dialog" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+        <div
+          className="modal fade"
+          id="modalDelete"
+          data-backdrop="static"
+          role="dialog"
+          aria-labelledby="modalDeleteLabel"
+          aria-hidden="true"
+        >
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="modalDeleteLabel">Delete data</h5>
+                <h5 className="modal-title" id="modalDeleteLabel">
+                  Delete data
+                </h5>
               </div>
               <div className="modal-body">
                 Are you sure want delete this data?
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={this.handleCancel} data-dismiss="modal">Cancel</button>
-                <button type="button" className="btn btn-danger" onClick={this.deleteIt} data-dismiss="modal">Delete</button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={this.handleCancel}
+                  data-dismiss="modal"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={this.deleteIt}
+                  data-dismiss="modal"
+                >
+                  Delete
+                </button>
               </div>
             </div>
           </div>
         </div>
       </Fragment>
-    )
+    );
   }
 }
 
