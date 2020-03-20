@@ -8,10 +8,10 @@ import { Provider } from 'react-redux';
 import store from './redux/Store';
 
 const AppWithRedux = () => (
-  // <Provider store={store}>
-  //   <Home />
-  // </Provider>
-  <h1>Hello world!</h1>
+  <Provider store={store}>
+    <Home />
+  </Provider>
+  // <h1>Hello world!</h1>
 );
 
 ReactDOM.render(<AppWithRedux />, document.getElementById('root'));
