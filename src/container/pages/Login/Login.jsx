@@ -7,7 +7,7 @@ import Axios from 'axios';
 // Style
 import './Login.css';
 
-const URL_STRING_USER = `https://3.88.112.145:4001/api/v1/login`;
+const URL_STRING_USER = "https://3.88.112.145:4001/api/v1/login";
 
 class Login extends Component {
   state = {
