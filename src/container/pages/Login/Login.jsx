@@ -23,7 +23,7 @@ class Login extends Component {
   loginUser = () => {
     Axios.post(URL_STRING_USER, this.state.formUser).then(response => {
       if (!response.data.token) {
-        console.log('res: ', response);
+        console.log(response.data.msg);
         // this.setState({ msg: response.data.msg });
         document.getElementById('alert').setAttribute('class', 'alert alert-danger alert-dismissible fade show d-block')
       } else {
