@@ -7,7 +7,7 @@ import Axios from 'axios';
 // Style
 import './Login.css';
 
-const URL_STRING_USER = "https://3.88.112.145:4001/api/v1/login";
+const URL_STRING_USER = `${process.env.REACT_APP_URL_STRING}/login`;
 
 class Login extends Component {
   state = {
@@ -21,11 +21,9 @@ class Login extends Component {
 
   // API{
   loginUser = () => {
-    Axios.post("https://3.88.112.145:4001/api/v1/login", this.state.formUser).then(response => {
+    Axios.post(URL_STRING_USER, this.state.formUser).then(response => {
       if (!response.data.token) {
-        console.log('link: ', "https://3.88.112.145:4001/api/v1/login");
         console.log('res: ', response);
-        console.log('state: ', this.state.formUser);
         // this.setState({ msg: response.data.msg });
         document.getElementById('alert').setAttribute('class', 'alert alert-danger alert-dismissible fade show d-block')
       } else {
