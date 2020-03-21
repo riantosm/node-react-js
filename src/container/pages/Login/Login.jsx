@@ -21,9 +21,9 @@ class Login extends Component {
 
   // API{
   loginUser = () => {
-    Axios.post(URL_STRING_USER, this.state.formUser).then(response => {
+    Axios.post("https://3.88.112.145:4001/api/v1/login", this.state.formUser).then(response => {
       if (!response.data.token) {
-        console.log('link: ', URL_STRING_USER);
+        console.log('link: ', "https://3.88.112.145:4001/api/v1/login");
         console.log('res: ', response);
         console.log('state: ', this.state.formUser);
         // this.setState({ msg: response.data.msg });
