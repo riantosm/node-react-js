@@ -15,9 +15,9 @@ POS-RESTfulAPI is an application to manage sales at ar-cafe, this application cr
 2. Type `$ git clone https://github.com/riantosm/reactjs-arcafe.git`.
 3. Open the folder and type `$ npm install` for install dependencies.
 4. Create .env file on your favorite code editor, and copy paste this code below :
-```
- REACT_APP_URL_STRING = http://localhost:4001/api/v1
- ```
+   ```
+   REACT_APP_URL_STRING = http://localhost:4001/api/v1
+   ```
 5. type `$ npm start` for run dependencies.
 
 
